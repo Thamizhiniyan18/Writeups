@@ -1,13 +1,16 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Difficulty: Easy
 tags:
   - RCE
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Machine
+Title: Lame
+Category: 
+CreatedOn: 04-12-2023
 ---
+# Lame
+
 Hello everyone, In this blog we are going to solve Lame from HackTheBox.
 
 Link for the machine : [https://app.hackthebox.com/machines/1](https://app.hackthebox.com/machines/1)

@@ -1,12 +1,15 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Category: Crypto
 Difficulty: Easy
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Challenge
+Title: Weak RSA
+tags: 
+CreatedOn: 04-12-2023
 ---
+# Weak RSA
+
 **Link to the Challenge:** [https://app.hackthebox.com/challenges/6](https://app.hackthebox.com/challenges/6)
 
   

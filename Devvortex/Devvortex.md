@@ -1,15 +1,18 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Difficulty: Easy
 tags:
   - Joomla
   - apport-cli
   - vhost
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Machine
+Title: Devvortex
+Category: 
+CreatedOn: 04-12-2023
 ---
+# Devvortex
+
 ## Introduction
 
 Hello everyone, In this writeup we are going to solve Devvortex from HackTheBox.

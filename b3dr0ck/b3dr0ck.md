@@ -1,8 +1,7 @@
 ---
-Platform: HackTheBox
+Platform: TryHackMe
 Difficulty: Easy
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Machine
 Title: b3dr0ck
 Category: 

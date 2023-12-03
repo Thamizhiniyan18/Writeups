@@ -1,13 +1,16 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Difficulty: Easy
 tags:
   - gRPC
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Machine
+Title: PC
+Category: 
+CreatedOn: 04-12-2023
 ---
+# PC
+
   
 
 Hey guys in this write up we are going to solve break into the machine PC from HackTheBox.

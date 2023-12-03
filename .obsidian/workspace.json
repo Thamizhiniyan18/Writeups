@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "5fe4ca90326b4421",
+        "id": "d35928578d67ed8e",
         "type": "tabs",
         "children": [
           {
-            "id": "f5c1ee2dbcd0337a",
+            "id": "ea9609f6dc36f285",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "b3dr0ck/b3dr0ck.md",
+                "file": "You know 0xDiablos/You know 0xDiablos.md",
                 "mode": "source",
                 "source": false
               }
@@ -65,11 +65,13 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "f467b60c25abd3cc",
@@ -85,7 +87,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "b3dr0ck/b3dr0ck.md",
+                "file": "You know 0xDiablos/You know 0xDiablos.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +104,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "b3dr0ck/b3dr0ck.md",
+                "file": "You know 0xDiablos/You know 0xDiablos.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +127,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "b3dr0ck/b3dr0ck.md"
+                "file": "You know 0xDiablos/You know 0xDiablos.md"
               }
             }
           }
@@ -147,23 +149,35 @@
       "obsidian-importer:Open Importer": false
     }
   },
-  "active": "f5c1ee2dbcd0337a",
+  "active": "eb7bf0d96a266683",
   "lastOpenFiles": [
-    "APKrypt/APKrypt.md",
-    "templates/Metadata.md",
-    "APKey/APKey.md",
-    "Anchored/Anchored.md",
-    "templates/HackTheBox - Writeups.md",
-    "Aomodjfalkgdhshag.md",
-    "Find The Easy Pass/assets/Untitled.png",
+    "Weak RSA/Weak RSA.md",
     "Under Construction/Under Construction.md",
-    "Writeups - Database/Writeups - Database.md",
-    "Writeups - Database/Topology.md",
-    "Writeups - Database/HackTheBox Writeup - Template 2.md",
-    "Writeups - Database/HackTheBox Writeup - Template.md",
+    "Templated/Templated.md",
+    "TakeOver/TakeOver.md",
     "Squashed/Squashed.md",
-    "Squashed/Squashed.md",
-    "Devvortex/Devvortex.md",
+    "SQHell/SQHell.md",
+    "Simple CTF/Simple CTF.md",
+    "SeeTheSharpFlag/SeeTheSharpFlag.md",
+    "Sau/Sau.md",
+    "Pinned/Pinned.md",
+    "Pilgrimage/Pilgrimage.md",
+    "PC/PC.md",
+    "Overpass 3 - Hosting/Overpass 3 - Hosting.md",
+    "Overpass 2 - Hacked/Overpass 2 - Hacked.md",
+    "Overpass/Overpass.md",
+    "NoSQLInjection/NoSQLInjection.md",
+    "NodeBlog/NodeBlog.md",
+    "Netmon/Netmon.md",
+    "Metamorphosis/Metamorphosis.md",
+    "Manager/Manager.md",
+    "Lame/Lame.md",
+    "Keeper/Keeper.md",
+    "Jerry/Jerry.md",
+    "Find The Easy Pass/Find The Easy Pass.md",
+    "Explore/Explore.md",
+    "Eavesdropper/Eavesdropper.md",
+    "Find The Easy Pass/assets/Untitled.png",
     "Blue/assets/Untitled 6.png",
     "Blue/assets/Untitled 5.png",
     "Blue/assets/Untitled 4.png",
@@ -176,18 +190,6 @@
     "SQHell/assets/sqli-logic.txt",
     "TakeOver/assets/Viewing_certificate_in_Browser.webm",
     "PC/assets/Screencast_from_2023-08-07_14-27-39.webm",
-    "Challenge Template/Writeup - TITLE DIFFICULTY.md",
-    "Blue/Blue.md",
-    "Keeper/Keeper.md",
-    "Netmon/Netmon.md",
-    "Metamorphosis/Metamorphosis.md",
-    "Manager/Manager.md",
-    "You know 0xDiablos/You know 0xDiablos.md",
-    "Pilgrimage/Pilgrimage.md",
-    "NoSQLInjection/NoSQLInjection.md",
-    "Don’t Overreact/Don’t Overreact.md",
-    "SQHell/SQHell.md",
-    "Overpass/Overpass.md",
     "Blue/assets",
     "Keeper/assets",
     "Anchored/assets",

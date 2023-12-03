@@ -1,14 +1,17 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Difficulty: Easy
 tags:
   - RCE
   - anonymous-ftp
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Machine
+Title: Netmon
+Category: 
+CreatedOn: 04-12-2023
 ---
+# Netmon
+
 **Link to the machine:** [https://app.hackthebox.com/machines/177](https://app.hackthebox.com/machines/177)
 
   

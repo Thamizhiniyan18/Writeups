@@ -1,6 +1,5 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Category: Web
 Difficulty: Easy
 tags:
@@ -8,9 +7,12 @@ tags:
   - arbitrary-file-upload
   - default-credentials
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Machine
+Title: Jerry
+CreatedOn: 04-12-2023
 ---
+# Jerry
+
 Hello everyone, In this blog we are going to solve Jerry from HackTheBox.
 
 Link for the machine : [https://app.hackthebox.com/machines/Jerry](https://app.hackthebox.com/machines/Jerry)

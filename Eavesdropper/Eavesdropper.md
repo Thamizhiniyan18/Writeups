@@ -1,11 +1,15 @@
 ---
-Platform:
-  - TryHackMe
+Platform: TryHackMe
 Difficulty: Medium
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Machine
+Title: Eavesdropper
+Category: 
+tags: 
+CreatedOn: 04-12-2023
 ---
+# Eavesdropper
+
 In this writeup we are going to solve the Eavesdropper room from TryHackMe.
 
 Link to the Room : [https://tryhackme.com/room/eavesdropper](https://tryhackme.com/room/eavesdropper)

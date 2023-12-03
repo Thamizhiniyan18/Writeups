@@ -1,11 +1,15 @@
 ---
-Platform:
-  - TryHackMe
+Platform: TryHackMe
 Difficulty: Easy
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Machine
+Title: Simple CTF
+Category: 
+tags: 
+CreatedOn: 04-12-2023
 ---
+# Simple CTF
+
 Hello folks, Today we are going solve the TryHackMe machine Simple CTF.
 
 Link to the room: [https://tryhackme.com/room/easyctf](https://tryhackme.com/room/easyctf)

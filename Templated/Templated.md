@@ -1,15 +1,17 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Category: Web
 Difficulty: Easy
 tags:
   - jinja
   - template-injection
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Challenge
+Title: Templated
+CreatedOn: 04-12-2023
 ---
+# Templated
+
 **Link to the Challenge:** [https://app.hackthebox.com/challenges/templated](https://app.hackthebox.com/challenges/templated)
 
   

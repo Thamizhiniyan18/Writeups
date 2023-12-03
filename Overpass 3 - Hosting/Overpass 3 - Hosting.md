@@ -1,11 +1,15 @@
 ---
-Platform:
-  - TryHackMe
+Platform: TryHackMe
 Difficulty: Medium
 Status: TODO
-Blog Posting: Not Posted
 Type: Machine
+Title: Overpass 3 - Hosting
+Category: 
+tags: 
+CreatedOn: 04-12-2023
 ---
+# Overpass 3 - Hosting
+
 Hello folks, Today we are going solve the TryHackMe machine Overpass 3 - Hosting.
 
 Link to the room: [https://tryhackme.com/room/overpass3hosting](https://tryhackme.com/room/overpass3hosting)

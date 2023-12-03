@@ -1,12 +1,15 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Category: Reversing
 Difficulty: Easy
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Challenge
+Title: Find The Easy Pass
+tags: 
+CreatedOn: 04-12-2023
 ---
+# Find The Easy Pass
+
 **Link to the Challenge:** [https://app.hackthebox.com/challenges/5](https://app.hackthebox.com/challenges/5)
 
   

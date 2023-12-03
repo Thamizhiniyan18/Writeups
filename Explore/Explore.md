@@ -1,12 +1,15 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Category: Android
 Difficulty: Easy
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Machine
+Title: Explore
+tags: 
+CreatedOn: 04-12-2023
 ---
+# Explore
+
 Hello everyone, In this blog we are going to solve Explore from HackTheBox.
 
 Link for the machine : [https://app.hackthebox.com/machines/356](https://app.hackthebox.com/machines/356)

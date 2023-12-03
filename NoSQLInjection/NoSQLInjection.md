@@ -1,14 +1,17 @@
 ---
-Platform:
-  - CreatedByMe
+Platform: CreatedByMe
 Category: Web
 tags:
   - No-SQL-Injection
   - suid
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Machine
+Title: NoSQLInjection
+Difficulty: 
+CreatedOn: 04-12-2023
 ---
+# NoSQLInjection
+
 First start the machine in VMware.
 
 ![[NoSQLInjection/assets/Untitled.png|Untitled.png]]

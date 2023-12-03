@@ -1,12 +1,15 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Category: Android
 Difficulty: Medium
 Status: TODO
-Blog Posting: Not Posted
 Type: Machine
+Title: SeeTheSharpFlag
+tags: 
+CreatedOn: 04-12-2023
 ---
+# SeeTheSharpFlag
+
 Hey everyone, in this write-up we will be solving an HTB challenge APKey.
 
 Link to the challenge: [https://app.hackthebox.com/challenges/240](https://app.hackthebox.com/challenges/240)

@@ -3,7 +3,6 @@ Platform: HackTheBox
 Category: Android
 Difficulty: Easy
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Challenge
 Title: APKrypt
 tags: 

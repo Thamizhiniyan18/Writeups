@@ -1,13 +1,14 @@
 ---
-Platform:
-  - TryHackMe
+Platform: TryHackMe
 Category: Web
 Difficulty: Medium
-Status: TODO
-Blog Posting: Not Posted
+Status: InProgress
 Type: Machine
+Title: SQHell
+tags: 
+CreatedOn: 04-12-2023
 ---
-  
+# SQHell
 
 In this writeup we are going to solve the SQHell room from TryHackMe.
 

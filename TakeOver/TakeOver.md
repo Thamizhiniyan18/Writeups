@@ -1,11 +1,15 @@
 ---
-Platform:
-  - TryHackMe
+Platform: TryHackMe
 Difficulty: Easy
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Machine
+Title: TakeOver
+Category: 
+tags: 
+CreatedOn: 04-12-2023
 ---
+# TakeOver
+
 In this writeup we are going to solve the TakeOver room from TryHackMe.
 
 Link to the Room : [https://tryhackme.com/room/takeover](https://tryhackme.com/room/takeover)

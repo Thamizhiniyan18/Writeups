@@ -1,11 +1,15 @@
 ---
-Platform:
-  - TryHackMe
+Platform: TryHackMe
 Difficulty: Medium
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Machine
+Title: Metamorphosis
+Category: 
+tags: 
+CreatedOn: 04-12-2023
 ---
+# Metamorphosis
+
   
 
 In this writeup we are going to solve the Metamorphosis room from TryHackMe.

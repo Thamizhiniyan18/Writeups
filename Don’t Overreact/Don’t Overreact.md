@@ -1,12 +1,15 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Category: Android
 Difficulty: Very Easy
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Challenge
+Title: Don’t Overreact
+tags: 
+CreatedOn: 04-12-2023
 ---
+# Don’t Overreact
+
 Hey everyone, in this write-up we will be solving an HTB challenge Don’t Overreact.
 
 Link to the challenge: [https://app.hackthebox.com/challenges/255](https://app.hackthebox.com/challenges/255)

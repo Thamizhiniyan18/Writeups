@@ -1,12 +1,15 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Category: Android
 Difficulty: Easy
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Challenge
+Title: Cat
+tags: 
+CreatedOn: 04-12-2023
 ---
+# Cat
+
 Hey everyone, in this write-up we will be solving an HTB challenge Cat.
 
 Link to the challenge: [https://app.hackthebox.com/challenges/cat](https://app.hackthebox.com/challenges/cat)

@@ -1,11 +1,15 @@
 ---
-Platform:
-  - TryHackMe
+Platform: TryHackMe
 Difficulty: Medium
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Machine
+Title: Capstone Challenge
+Category: 
+tags: 
+CreatedOn: 04-12-2023
 ---
+# Capstone Challenge
+
   
 
 Hello everyone, this write-up is a walk-through of the Capstone Challenge, which is the final task of the TryHackMe room Linux Privilege Escalation.

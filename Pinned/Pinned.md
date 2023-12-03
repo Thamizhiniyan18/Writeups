@@ -1,6 +1,5 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Category: Android
 Difficulty: Easy
 tags:
@@ -8,9 +7,12 @@ tags:
   - certificate-pinning-bypass
   - frida
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Challenge
+Title: Pinned
+CreatedOn: 04-12-2023
 ---
+# Pinned
+
 Hey everyone, in this write-up we will be solving an HTB challenge Pinned.
 
 Link to the challenge: [https://app.hackthebox.com/challenges/282](https://app.hackthebox.com/challenges/282)

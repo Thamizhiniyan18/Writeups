@@ -1,15 +1,18 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Difficulty: Easy
 tags:
   - RCE
   - SSRF
   - suid
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Machine
+Title: Sau
+Category: 
+CreatedOn: 04-12-2023
 ---
+# Sau
+
 Hello everyone, In this blog we are going to solve Sau from HackTheBox.
 
 Link for the machine : [https://app.hackthebox.com/machines/Sau](https://app.hackthebox.com/machines/Sau)

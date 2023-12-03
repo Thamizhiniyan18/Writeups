@@ -1,6 +1,5 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Category: Web
 Difficulty: Easy
 tags:
@@ -8,9 +7,12 @@ tags:
   - mongo-db
   - nodejs
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Machine
+Title: NodeBlog
+CreatedOn: 04-12-2023
 ---
+# NodeBlog
+
 Hello everyone, In this blog we are going to solve the NodeBlog ( retired machine ) from HackTheBox.
 
 Link for the machine : [https://app.hackthebox.com/machines/NodeBlog](https://app.hackthebox.com/machines/NodeBlog)

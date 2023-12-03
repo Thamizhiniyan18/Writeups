@@ -1,12 +1,15 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Category: Web
 Difficulty: Medium
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Challenge
+Title: Under Construction
+tags: 
+CreatedOn: 04-12-2023
 ---
+# Under Construction
+
 **Link to the Challenge:** [https://app.hackthebox.com/challenges/111](https://app.hackthebox.com/challenges/111)
 
   

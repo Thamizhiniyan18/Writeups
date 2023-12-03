@@ -1,15 +1,18 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Difficulty: Easy
 tags:
   - MS17-010
   - RCE
   - Windows
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Machine
+Title: Blue
+Category: 
+CreatedOn: 04-12-2023
 ---
+# Blue
+
 Hello everyone, In this blog we are going to solve Blue from HackTheBox.
 
 Link for the machine : [https://app.hackthebox.com/machines/51](https://app.hackthebox.com/machines/51)

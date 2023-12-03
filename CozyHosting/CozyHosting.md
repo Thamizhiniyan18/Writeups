@@ -1,14 +1,17 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Difficulty: Easy
 tags:
   - command-injection
   - sudo-privesc
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Machine
+Title: CozyHosting
+Category: 
+CreatedOn: 04-12-2023
 ---
+# CozyHosting
+
 Hello everyone, In this blog we are going to solve CozyHosting from HackTheBox.
 
 Link for the machine : [https://app.hackthebox.com/machines/CozyHosting](https://app.hackthebox.com/machines/CozyHosting)

@@ -1,15 +1,16 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Category: Pwn
 Difficulty: Easy
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Challenge
+Title: You know 0xDiablos
+tags: 
+CreatedOn: 04-12-2023
 ---
-**Link to the Challenge:** [https://app.hackthebox.com/challenges/106](https://app.hackthebox.com/challenges/106)
+# You know 0xDiablos
 
-  
+**Link to the Challenge:** [https://app.hackthebox.com/challenges/106](https://app.hackthebox.com/challenges/106)
 
 First download the given file.
 

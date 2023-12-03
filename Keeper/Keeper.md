@@ -1,13 +1,16 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Difficulty: Easy
 tags:
   - default-credentials
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Machine
+Title: Keeper
+Category: 
+CreatedOn: 04-12-2023
 ---
+# Keeper
+
 Hello everyone, In this blog we are going to solve Keeper from HackTheBox.
 
 Link for the machine : [https://app.hackthebox.com/machines/Keeper](https://app.hackthebox.com/machines/Keeper)

@@ -1,13 +1,16 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Difficulty: Easy
 tags:
   - ArbitraryFileUpload
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Machine
+Title: Squashed
+Category: 
+CreatedOn: 04-12-2023
 ---
+# Squashed
+
 Hello everyone, In this blog we are going to solve Squashed ( retired machine ) from HackTheBox.
 
 Link for the machine : [https://app.hackthebox.com/machines/Squashed](https://app.hackthebox.com/machines/Squashed)

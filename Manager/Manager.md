@@ -1,12 +1,15 @@
 ---
-Platform:
-  - HackTheBox
+Platform: HackTheBox
 Category: Android
 Difficulty: Easy
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Challenge
+Title: Manager
+tags: 
+CreatedOn: 04-12-2023
 ---
+# Manager
+
 Hey everyone, in this write-up we will be solving an HTB challenge Manager.
 
 Link to the challenge: [https://app.hackthebox.com/challenges/283](https://app.hackthebox.com/challenges/283)

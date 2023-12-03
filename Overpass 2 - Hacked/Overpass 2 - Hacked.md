@@ -1,11 +1,15 @@
 ---
-Platform:
-  - TryHackMe
+Platform: TryHackMe
 Difficulty: Easy
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Machine
+Title: Overpass 2 - Hacked
+Category: 
+tags: 
+CreatedOn: 04-12-2023
 ---
+# Overpass 2 - Hacked
+
 In this writeup we are going to solve the Overpass 2 - Hacked room from TryHackMe.
 
 Link to the Room : [https://tryhackme.com/room/overpass2hacked](https://tryhackme.com/room/overpass2hacked)

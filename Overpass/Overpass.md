@@ -1,11 +1,15 @@
 ---
-Platform:
-  - TryHackMe
+Platform: TryHackMe
 Difficulty: Easy
 Status: Rooted/Finished
-Blog Posting: Not Posted
 Type: Machine
+Title: Overpass
+Category: 
+tags: 
+CreatedOn: 04-12-2023
 ---
+# Overpass
+
 In this writeup we are going to solve the Overpass room from TryHackMe.
 
 Link to the Room : [https://tryhackme.com/room/overpass](https://tryhackme.com/room/overpass)
