@@ -32,11 +32,11 @@ After joining the machine you can see the IP Address of the target machine.
 
 First I started by scanning for open ports on the target machine.
 
-![[Explore/assets/Untitled.png|Untitled.png]]
+![Untitled.png](Explore/assets/Untitled.png)
 
-![[Explore/assets/Untitled 1.png|Untitled 1.png]]
+![Untitled 1.png](Explore/assets/Untitled%201.png)
 
-![[Explore/assets/Untitled 2.png|Untitled 2.png]]
+![Untitled 2.png](Explore/assets/Untitled%202.png)
 
 From the scan results we have found the following open ports:
 
@@ -53,17 +53,17 @@ On further research about the **CVE-2019-6447,** found the following exploit: [h
 
 Download the exploit and run it with python 3
 
-![[Explore/assets/Untitled 3.png|Untitled 3.png]]
+![Untitled 3.png](Explore/assets/Untitled%203.png)
 
 Now to list the files, execute the following command:`python3 50070.py listFiles 10.10.10.247 | grep name`
 
-![[Explore/assets/Untitled 4.png|Untitled 4.png]]
+![Untitled 4.png](Explore/assets/Untitled%204.png)
 
 Based on the output, nothing interesting was found. Next I tried to list the pictures.
 
 Command:`python3 50070.py listPics 10.10.10.247`
 
-![[Explore/assets/Untitled 5.png|Untitled 5.png]]
+![Untitled 5.png](Explore/assets/Untitled%205.png)
 
 From the output, we can see a picture named `creds.jpg`, which sounds interesting.
 
@@ -71,11 +71,11 @@ So I decided to take a look it and downloaded the picture using the command:
 
 `python3 50070.py getFile 10.10.10.247 /storage/emulated/0/DCIM/creds.jpg`
 
-![[Explore/assets/Untitled 6.png|Untitled 6.png]]
+![Untitled 6.png](Explore/assets/Untitled%206.png)
 
 Open the `out.dat` file with a image viewer.
 
-![[Explore/assets/Untitled 7.png|Untitled 7.png]]
+![Untitled 7.png](Explore/assets/Untitled%207.png)
 
 From the image, we have got the following credentials: `kristi:Kr1sT!5h@Rp3xPl0r3!`
 
@@ -83,7 +83,7 @@ Now try to login via SSH to the target using the found credentials.
 
 While trying to login via SSH got the following error:
 
-![[Explore/assets/Untitled 8.png|Untitled 8.png]]
+![Untitled 8.png](Explore/assets/Untitled%208.png)
 
 On searching for solution for the above error, found this: [https://support.genymotion.com/hc/en-us/articles/9500420360093-I-get-the-error-no-matching-host-key-type-found-Their-offer-ssh-rsa-when-trying-to-connect-with-SSH](https://support.genymotion.com/hc/en-us/articles/9500420360093-I-get-the-error-no-matching-host-key-type-found-Their-offer-ssh-rsa-when-trying-to-connect-with-SSH)
 
@@ -91,17 +91,17 @@ To fix the error, use the `ssh` command as shown below:
 
 Command:`ssh -p 2222 -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa kristi@10.10.10.247`
 
-![[Explore/assets/Untitled 9.png|Untitled 9.png]]
+![Untitled 9.png](Explore/assets/Untitled%209.png)
 
 We have successfully logged in.
 
 On surfing the file system, I found the flag at `/sdcard/` location.
 
-![[Explore/assets/Untitled 10.png|Untitled 10.png]]
+![Untitled 10.png](Explore/assets/Untitled%2010.png)
 
 Next its time to escalate our privileges. I was looking out for privilege escalation vectors and found the `/etc/init.sh` script.
 
-![[Explore/assets/Untitled 11.png|Untitled 11.png]]
+![Untitled 11.png](Explore/assets/Untitled%2011.png)
 
 On viewing the contents of the script, we can see that firewall blocks all the connections to the port 5555 from the outside and only allows access to it from localhost.
 
@@ -121,23 +121,23 @@ ssh -p 2222 -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa k
 // -f - Runs SSH in background
 ```
 
-![[Explore/assets/Untitled 12.png|Untitled 12.png]]
+![Untitled 12.png](Explore/assets/Untitled%2012.png)
 
 After executing the command successfully, we can now connect to the target via adb using the command: `adb connect localhost:5555`
 
-![[Explore/assets/Untitled 13.png|Untitled 13.png]]
+![Untitled 13.png](Explore/assets/Untitled%2013.png)
 
 Now lets open the interactive shell using the command: `adb -s localhost:5555 shell`
 
-![[Explore/assets/Untitled 14.png|Untitled 14.png]]
+![Untitled 14.png](Explore/assets/Untitled%2014.png)
 
 Now use the `su` command to escalate our privilege as sudo/root.
 
-![[Explore/assets/Untitled 15.png|Untitled 15.png]]
+![Untitled 15.png](Explore/assets/Untitled%2015.png)
 
 Found the flag at `/data/` directory.
 
-![[Explore/assets/Untitled 16.png|Untitled 16.png]]
+![Untitled 16.png](Explore/assets/Untitled%2016.png)
 
 We have successfully found the root flag.
 

@@ -43,7 +43,7 @@ After joining the machine you can see the IP Address of the target machine.
 
 `rustscan -a <TARGET> -- T4 -v -A`
 
-![[Devvortex/assets/Untitled.png|Untitled.png]]
+![Untitled.png](Devvortex/assets/Untitled.png)
 
   
 
@@ -51,7 +51,7 @@ After joining the machine you can see the IP Address of the target machine.
 
 `nmap -sC <TARGET>`
 
-![[Devvortex/assets/Untitled 1.png|Untitled 1.png]]
+![Untitled 1.png](Devvortex/assets/Untitled%201.png)
 
   
 
@@ -68,15 +68,15 @@ After joining the machine you can see the IP Address of the target machine.
 
 From the reconnaissance results, there is website running on port 80. I visited the website but it is redirected to the domain `devvortex.htb` and the domain name is not resolved.
 
-![[Devvortex/assets/Untitled 2.png|Untitled 2.png]]
+![Untitled 2.png](Devvortex/assets/Untitled%202.png)
 
 To access the website, we have to map the domain name to the target IP. We can do this by modifying the `/etc/hosts` file. Append the underlined line from the image below in `/etc/hosts` file. The target IP might differ in your case.
 
-![[Devvortex/assets/Untitled 3.png|Untitled 3.png]]
+![Untitled 3.png](Devvortex/assets/Untitled%203.png)
 
 After modifying the `/etc/hosts` file, refresh the website to see the contents of the website.
 
-![[Devvortex/assets/Untitled 4.png|Untitled 4.png]]
+![Untitled 4.png](Devvortex/assets/Untitled%204.png)
 
 ### **Active Infrastructure Enumeration**
 
@@ -84,7 +84,7 @@ After modifying the `/etc/hosts` file, refresh the website to see the contents o
 
 `curl -I "http://${TARGET}"`
 
-![[Devvortex/assets/Untitled 5.png|Untitled 5.png]]
+![Untitled 5.png](Devvortex/assets/Untitled%205.png)
 
   
 
@@ -92,13 +92,13 @@ After modifying the `/etc/hosts` file, refresh the website to see the contents o
 
 `whatweb -a 1 http://devvortex.htb`
 
-![[Devvortex/assets/Untitled 6.png|Untitled 6.png]]
+![Untitled 6.png](Devvortex/assets/Untitled%206.png)
 
 **Wafw00f**
 
 `wafw00f http://devvortex.htb`
 
-![[Devvortex/assets/Untitled 7.png|Untitled 7.png]]
+![Untitled 7.png](Devvortex/assets/Untitled%207.png)
 
 ### **Active Subdomain Enumeration**
 
@@ -106,13 +106,13 @@ After modifying the `/etc/hosts` file, refresh the website to see the contents o
 
 `ffuf -w /opt/useful/SecLists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ -u https://FUZZ.devvortex.htb/`
 
-![[Devvortex/assets/Untitled 8.png|Untitled 8.png]]
+![Untitled 8.png](Devvortex/assets/Untitled%208.png)
 
 **VHost Fuzzing**
 
 `ffuf -w /opt/useful/SecLists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ -u http://devvortex.htb/ -H 'Host: FUZZ.devvortex.htb' -fs 154`
 
-![[Devvortex/assets/Untitled 9.png|Untitled 9.png]]
+![Untitled 9.png](Devvortex/assets/Untitled%209.png)
 
 ### Results
 
@@ -122,7 +122,7 @@ Found a **vhost** `dev.devvortex.htb`.
 
 To access the vhost, add add the domain to new subdomain `/etc/hosts` as before and visit the subdomain in a browser.
 
-![[Devvortex/assets/Untitled 10.png|Untitled 10.png]]
+![Untitled 10.png](Devvortex/assets/Untitled%2010.png)
 
 ---
 
@@ -130,7 +130,7 @@ To access the vhost, add add the domain to new subdomain `/etc/hosts` as before 
 
 After modifying the `/etc/hosts` file, refresh the website to see the contents of the website.
 
-![[Devvortex/assets/Untitled 11.png|Untitled 11.png]]
+![Untitled 11.png](Devvortex/assets/Untitled%2011.png)
 
 ### **Active Infrastructure Enumeration**
 
@@ -138,19 +138,19 @@ After modifying the `/etc/hosts` file, refresh the website to see the contents o
 
 `curl -I "http://${TARGET}"`
 
-![[Devvortex/assets/Untitled 12.png|Untitled 12.png]]
+![Untitled 12.png](Devvortex/assets/Untitled%2012.png)
 
 **Whatweb**
 
 `whatweb -a 1 https://dev.devvortex.htb`
 
-![[Devvortex/assets/Untitled 13.png|Untitled 13.png]]
+![Untitled 13.png](Devvortex/assets/Untitled%2013.png)
 
 **Wafw00f**
 
 `wafw00f http://devvortex.htb`
 
-![[Devvortex/assets/Untitled 14.png|Untitled 14.png]]
+![Untitled 14.png](Devvortex/assets/Untitled%2014.png)
 
   
 
@@ -164,13 +164,13 @@ Nothing interesting found.
 
 **robots.txt -** Found
 
-![[Devvortex/assets/Untitled 15.png|Untitled 15.png]]
+![Untitled 15.png](Devvortex/assets/Untitled%2015.png)
 
 From the above listed paths, the `/administrator` path sounds interesting.
 
 So I first visited the `/administrator` path.
 
-![[Devvortex/assets/Untitled 16.png|Untitled 16.png]]
+![Untitled 16.png](Devvortex/assets/Untitled%2016.png)
 
 Its a Joomla Administrator Login page.
 
@@ -184,17 +184,17 @@ https://github.com/SamJoan/droopescan
 
 `droopescan scan joomla --url http://dev.devvortex.htb/`
 
-![[Devvortex/assets/Untitled 17.png|Untitled 17.png]]
+![Untitled 17.png](Devvortex/assets/Untitled%2017.png)
 
 From the results of `droopescan` , I visited `http://dev.devvortex.htb/administrator/manifests/files/joomla.xml` to check for version information.
 
-![[Devvortex/assets/Untitled 18.png|Untitled 18.png]]
+![Untitled 18.png](Devvortex/assets/Untitled%2018.png)
 
 The `joomla.xml` was accessible and got the joomla version: 4.2.6.
 
 Next I searched for exploits for the above mentioned version and found the following:
 
-![[Devvortex/assets/Untitled 19.png|Untitled 19.png]]
+![Untitled 19.png](Devvortex/assets/Untitled%2019.png)
 
 [https://www.exploit-db.com/exploits/51334](https://www.exploit-db.com/exploits/51334)
 
@@ -208,11 +208,11 @@ So, instead of running the exploit, I directly visited the above endpoints in th
 
 The first endpoint responded with a list of users.
 
-![[Devvortex/assets/Untitled 20.png|Untitled 20.png]]
+![Untitled 20.png](Devvortex/assets/Untitled%2020.png)
 
 And the second endpoint responded with the configuration of the application which also had the password of the user `lewis`, that we found in the previous endpoint, who is part of the `Super Users` group.
 
-![[Devvortex/assets/Untitled 21.png|Untitled 21.png]]
+![Untitled 21.png](Devvortex/assets/Untitled%2021.png)
 
 ---
 
@@ -220,49 +220,49 @@ And the second endpoint responded with the configuration of the application whic
 
 With credentials `lewis:P4ntherg0t1n5r3c0n##`, that we found in the enumeration process, I tried to login in the `joomla` administrator page and was able successfully login.
 
-![[Devvortex/assets/Untitled 22.png|Untitled 22.png]]
+![Untitled 22.png](Devvortex/assets/Untitled%2022.png)
 
 Since we got access to administrator dashboard, I checked out whether it is possible to inject or modify the code in the available templates as mentioned here: [https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/joomla#rce](https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/joomla#rce).
 
 We can see the available templates under the system tab of the dasboard. I decided to try to modify the administrator template.
 
-![[Devvortex/assets/Untitled 23.png|Untitled 23.png]]
+![Untitled 23.png](Devvortex/assets/Untitled%2023.png)
 
 Next select the following.
 
-![[Devvortex/assets/Untitled 24.png|Untitled 24.png]]
+![Untitled 24.png](Devvortex/assets/Untitled%2024.png)
 
 In the template customize page you can see a list of available files and options to create, edit, save and delete files.
 
-![[Devvortex/assets/Untitled 25.png|Untitled 25.png]]
+![Untitled 25.png](Devvortex/assets/Untitled%2025.png)
 
 I decided to create a `php` file that contains the code to fetch a reverse shell back to us from the server. First click New File.
 
-![[Devvortex/assets/Untitled 26.png|Untitled 26.png]]
+![Untitled 26.png](Devvortex/assets/Untitled%2026.png)
 
 There is a option to upload a file, I tried to upload a php reverse shell, it didn’t work. So I decided to create a new file and copy the contents of the php reverse shell to the file. To do so enter the file name and choose the extension as php and then click create.
 
-![[Devvortex/assets/Untitled 27.png|Untitled 27.png]]
+![Untitled 27.png](Devvortex/assets/Untitled%2027.png)
 
 I used the pentest monkey php reverse shell: [http://pentestmonkey.net/tools/php-reverse-shell/php-reverse-shell-1.0.tar.gz](http://pentestmonkey.net/tools/php-reverse-shell/php-reverse-shell-1.0.tar.gz). I copied the contents of the reverse shell and pasted in the editor. Don;t forget to update your tun0 IP address in the reverse shell.
 
-![[Devvortex/assets/Untitled 28.png|Untitled 28.png]]
+![Untitled 28.png](Devvortex/assets/Untitled%2028.png)
 
 Now click `Save&Close` and start a `netcat` listener using the command `nc -lvnp 1234`.
 
-![[Devvortex/assets/Untitled 29.png|Untitled 29.png]]
+![Untitled 29.png](Devvortex/assets/Untitled%2029.png)
 
 Now visit the following URL: `http://dev.devvortex.htb/administrator/templates/atum/<nameTheFileThatYouCreated>.php` and check your reverse shell.
 
-![[Devvortex/assets/Untitled 30.png|Untitled 30.png]]
+![Untitled 30.png](Devvortex/assets/Untitled%2030.png)
 
-![[Devvortex/assets/Untitled 31.png|Untitled 31.png]]
+![Untitled 31.png](Devvortex/assets/Untitled%2031.png)
 
 Now we got the reverse shell back.
 
 I first upgraded my shell using the command: `python3 -c "import pty;pty.spawn('/bin/bash')”`.
 
-![[Devvortex/assets/Untitled 32.png|Untitled 32.png]]
+![Untitled 32.png](Devvortex/assets/Untitled%2032.png)
 
 We can see that, currently we are the user `www-data`.
 
@@ -274,39 +274,39 @@ Now its time to look out for privilege escalation vectors.
 
 First I checked the available users in the target machine.
 
-![[Devvortex/assets/Untitled 33.png|Untitled 33.png]]
+![Untitled 33.png](Devvortex/assets/Untitled%2033.png)
 
 There is another user named `logan`. And I checked the `/home/logan` folder which has the user flag, but we don’t have permissions to read it.
 
-![[Devvortex/assets/Untitled 34.png|Untitled 34.png]]
+![Untitled 34.png](Devvortex/assets/Untitled%2034.png)
 
 Next I was looking out for some basic privilege escalation vectors, but got nothing. Then I remembered the about the credentials that we used to login to `Joomla` which we can use to try to login to the `mysql` database.
 
 `mysql -u lewis -p` [ `-p` - to mention password based login ]
 
-![[Devvortex/assets/Untitled 35.png|Untitled 35.png]]
+![Untitled 35.png](Devvortex/assets/Untitled%2035.png)
 
 I was able to successfully login and found a database named `joomla`.
 
-![[Devvortex/assets/Untitled 36.png|Untitled 36.png]]
+![Untitled 36.png](Devvortex/assets/Untitled%2036.png)
 
 Next I tried to view the available tables using command: `show tables;`
 
-![[Devvortex/assets/Untitled 37.png|Untitled 37.png]]
+![Untitled 37.png](Devvortex/assets/Untitled%2037.png)
 
 The above command responded with a long list of which `sd4fg_users` table got my attention.
 
 Next I viewed the contents of the `sd4fg_users` table.
 
-![[Devvortex/assets/Untitled 38.png|Untitled 38.png]]
+![Untitled 38.png](Devvortex/assets/Untitled%2038.png)
 
 It had two users with their password hashes, which seems like a usual linux user account password hash ( blowfish hash ). Since we know that there is another user in the machine named `logan`, I tried to crack the `logan` user’s password hash using `john`.
 
-![[Devvortex/assets/Untitled 39.png|Untitled 39.png]]
+![Untitled 39.png](Devvortex/assets/Untitled%2039.png)
 
 And I got it cracked and I used the password to login as `logan` to the target machine via ssh.
 
-![[Devvortex/assets/Untitled 40.png|Untitled 40.png]]
+![Untitled 40.png](Devvortex/assets/Untitled%2040.png)
 
 I was able to successfully login and also got the user flag.
 
@@ -314,15 +314,15 @@ I was able to successfully login and also got the user flag.
 
 Next, again started looking out for privilege escalation vectors. Started with `sudo -l` command and got the following output.
 
-![[Devvortex/assets/Untitled 41.png]]
+![Untitled 41](Devvortex/assets/Untitled%2041.png)
 
 The user `logan` can only run `/usr/bin/apport-cli` with root privileges. `apport-cli` is basically a tool that generate crash reports. Next I checked the version of the `apport-cli`
 
-![[Devvortex/assets/Untitled 42.png]]
+![Untitled 42](Devvortex/assets/Untitled%2042.png)
 
 I searched about the above version of `apport-cli` and found the following commit: [https://github.com/canonical/apport/commit/e5f78cc89f1f5888b6a56b785dddcb0364c48ecb](https://github.com/canonical/apport/commit/e5f78cc89f1f5888b6a56b785dddcb0364c48ecb) which is a POC for to use this tool to escalate our privileges.
 
-![[Devvortex/assets/Untitled 43.png]]
+![Untitled 43](Devvortex/assets/Untitled%2043.png)
 
   
 
@@ -435,15 +435,15 @@ CoreDump: base64
 
 I manually created a crash file at `/var/crash` with `.crash` extension with the above content and the exploit just worked fine as mentioned in the POC.
 
-![[Devvortex/assets/Untitled 44.png]]
+![Untitled 44](Devvortex/assets/Untitled%2044.png)
 
 To get a root shell enter the below command in the pager view: `!/bin/bash`
 
-![[Devvortex/assets/Untitled 45.png]]
+![Untitled 45](Devvortex/assets/Untitled%2045.png)
 
 We have successfully got a shell with root privileges.
 
-![[Devvortex/assets/Untitled 46.png]]
+![Untitled 46](Devvortex/assets/Untitled%2046.png)
 
 Successfully got the root flag.
 

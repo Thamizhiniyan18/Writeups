@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "d35928578d67ed8e",
+        "id": "88c1a8aba458bc50",
         "type": "tabs",
         "children": [
           {
-            "id": "ea9609f6dc36f285",
+            "id": "9addd1cba8bd3058",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "You know 0xDiablos/You know 0xDiablos.md",
+                "file": "Capstone Challenge/Capstone Challenge.md",
                 "mode": "source",
                 "source": false
               }
@@ -65,13 +65,11 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "f467b60c25abd3cc",
@@ -87,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "You know 0xDiablos/You know 0xDiablos.md",
+                "file": "Capstone Challenge/Capstone Challenge.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "You know 0xDiablos/You know 0xDiablos.md",
+                "file": "Capstone Challenge/Capstone Challenge.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -127,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "You know 0xDiablos/You know 0xDiablos.md"
+                "file": "Capstone Challenge/Capstone Challenge.md"
               }
             }
           }
@@ -149,8 +147,12 @@
       "obsidian-importer:Open Importer": false
     }
   },
-  "active": "eb7bf0d96a266683",
+  "active": "9addd1cba8bd3058",
   "lastOpenFiles": [
+    "APKey/APKey.md",
+    "Untitled.canvas",
+    "Capstone Challenge/Capstone Challenge.md",
+    "You know 0xDiablos/You know 0xDiablos.md",
     "Weak RSA/Weak RSA.md",
     "Under Construction/Under Construction.md",
     "Templated/Templated.md",
@@ -174,9 +176,6 @@
     "Lame/Lame.md",
     "Keeper/Keeper.md",
     "Jerry/Jerry.md",
-    "Find The Easy Pass/Find The Easy Pass.md",
-    "Explore/Explore.md",
-    "Eavesdropper/Eavesdropper.md",
     "Find The Easy Pass/assets/Untitled.png",
     "Blue/assets/Untitled 6.png",
     "Blue/assets/Untitled 5.png",

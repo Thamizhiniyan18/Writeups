@@ -23,19 +23,19 @@ Let’s Start!!!!!!
 
 First download and extract the given file.
 
-![[APKey/assets/Untitled.png|Untitled.png]]
+![Untitled.png](APKey/assets/Untitled.png)
 
 Next I opened the apk with `jadx-gui` [ [https://github.com/skylot/jadx](https://github.com/skylot/jadx) ].
 
-![[APKey/assets/Untitled 1.png|Untitled 1.png]]
+![Untitled 1.png](APKey/assets/Untitled%201.png)
 
 I checked the `AndroidManifest.xml` file and found that we need at least API version 16 to run this app and the target API version is 30 i.e., Android 10. So, I installed the app on Android 10 emulator.
 
-![[APKey/assets/Untitled 2.png|Untitled 2.png]]
+![Untitled 2.png](APKey/assets/Untitled%202.png)
 
 Now let’s take a look at the app.
 
-![[APKey/assets/Untitled 3.png|Untitled 3.png]]
+![Untitled 3.png](APKey/assets/Untitled%203.png)
 
 It opened with a login page, and if we enter wrong credentials, it throws a toast stating “Wrong Credentials”.
 
@@ -43,7 +43,7 @@ Nothing else is found in the app.
 
 Now let’s take a look at the source code of the application.
 
-![[APKey/assets/Untitled 4.png|Untitled 4.png]]
+![Untitled 4.png](APKey/assets/Untitled%204.png)
 
 From the MainActivity class file, we can see a if condition, which looks out for the user `admin` and checks whether the md5 version of the entered password matches the predefined hash in the second if condition, and if the condition satisfies the application throws a toast with the key.
 
@@ -55,47 +55,47 @@ To perform the above task, I used `APKlab` ( [https://github.com/APKLab/APKLab](
 
 First open vscode and use the shortcut key `ctrl + shift + p` to open the command pallet and search for `APKLab: Open an APK` option and click it.
 
-![[APKey/assets/Untitled 5.png|Untitled 5.png]]
+![Untitled 5.png](APKey/assets/Untitled%205.png)
 
 Now locate the apk file and select it.
 
-![[APKey/assets/Untitled 6.png|Untitled 6.png]]
+![Untitled 6.png](APKey/assets/Untitled%206.png)
 
 Next leave the defaults in the popup and click OK.
 
-![[APKey/assets/Untitled 7.png|Untitled 7.png]]
+![Untitled 7.png](APKey/assets/Untitled%207.png)
 
 After pressing ok, `APKLab` will decompile the android application and will load a new window with the decompiled files.
 
 I used the search feature in the vscode to find the condition, by looking out for the MD5 hashed version of the password to which our input code is compared.
 
-![[APKey/assets/Untitled 8.png|Untitled 8.png]]
+![Untitled 8.png](APKey/assets/Untitled%208.png)
 
-![[APKey/assets/Untitled 9.png|Untitled 9.png]]
+![Untitled 9.png](APKey/assets/Untitled%209.png)
 
 From the results, we have found the if condition.  
 Now its time to modify the if condition.
 
 Replace the `if-eqz` to `if-nez`, which means `not equals` and save the file.
 
-![[APKey/assets/Untitled 10.png|Untitled 10.png]]
+![Untitled 10.png](APKey/assets/Untitled%2010.png)
 
 Now it’s time to compile it into apk,sign the apk and install the apk onto the emulator.
 
 To do that select the `apktool.yml` file in the file explorer → right click to view the options → click on the option `APKLab: Rebuild and Install the APK`
 
 > [!important]  
-> NOTE: Before performing the above task, don’t forget to uninstall the original version of the app from the emulator.![[APKey/assets/Untitled 11.png|Untitled 11.png]]  
+> NOTE: Before performing the above task, don’t forget to uninstall the original version of the app from the emulator.![Untitled 11.png](APKey/assets/Untitled%2011.png)  
 
-![[APKey/assets/Untitled 12.png|Untitled 12.png]]
+![Untitled 12.png](APKey/assets/Untitled%2012.png)
 
 After the build process is completed and the app is successfully installed, you should see a output similar to this:
 
-![[APKey/assets/Untitled 13.png|Untitled 13.png]]
+![Untitled 13.png](APKey/assets/Untitled%2013.png)
 
 Now open the app and type the user name as `admin` and enter some random password.
 
-![[APKey/assets/Untitled 14.png|Untitled 14.png]]
+![Untitled 14.png](APKey/assets/Untitled%2014.png)
 
 You can see the toast message with the flag.
 

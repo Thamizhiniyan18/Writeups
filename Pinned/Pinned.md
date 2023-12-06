@@ -25,7 +25,7 @@ Let’s Start!!!!!!
 
 First download and extract the given file.
 
-![[Pinned/assets/Untitled.png|Untitled.png]]
+![Untitled.png](Pinned/assets/Untitled.png)
 
 From the README.txt file, we see can that the application supports API level 29 or earlier.
 
@@ -33,33 +33,33 @@ From the README.txt file, we see can that the application supports API level 29 
 
 First I used `apktool` to extract the contents of the `apk` file.
 
-![[Pinned/assets/Untitled 1.png|Untitled 1.png]]
+![Untitled 1.png](Pinned/assets/Untitled%201.png)
 
 After extracting the apk, I checked the `AndroidManifest.xml` file to look out for minimum required API level. But there was no minimum API level mentioned in the `AndroidManifest.xml` file.
 
-![[Pinned/assets/Untitled 2.png|Untitled 2.png]]
+![Untitled 2.png](Pinned/assets/Untitled%202.png)
 
 So, I decided to use Android 6 ( API 23 ).
 
 Next I installed the `pinned.apk` using adb on to the emulated android 6 device.
 
-![[Pinned/assets/Untitled 3.png|Untitled 3.png]]
+![Untitled 3.png](Pinned/assets/Untitled%203.png)
 
   
 
 I opened the application in the android emulator and it opened with credentials filled by default.
 
-![[Pinned/assets/Untitled 4.png|Untitled 4.png]]
+![Untitled 4.png](Pinned/assets/Untitled%204.png)
 
 I clicked on LOGIN and it toasted a message that “You are logged in”.
 
-![[Pinned/assets/Untitled 5.png|Untitled 5.png]]
+![Untitled 5.png](Pinned/assets/Untitled%205.png)
 
   
 
 From the challenge description, we can see that the user had tried to intercept the request, but the connection seems to be secure.
 
-![[Pinned/assets/Untitled 6.png|Untitled 6.png]]
+![Untitled 6.png](Pinned/assets/Untitled%206.png)
 
 Let’s try to intercept the login request using burpsuite.
 
@@ -69,7 +69,7 @@ Now Drop the above request and try to intercept the login request by trying to l
 
 But I can’t able to intercept the request. Instead burpsuite thrown the following error:
 
-![[Pinned/assets/Untitled 7.png|Untitled 7.png]]
+![Untitled 7.png](Pinned/assets/Untitled%207.png)
 
 So let’s take a look at the code. I used `jadx` viewer to view the code. You can get it from here:
 
@@ -77,15 +77,15 @@ https://github.com/skylot/jadx
 
 Open the apk in `jadx` Viewer. I first checked the `MainActivity.class` file and found the function that checks the credentials.
 
-![[Pinned/assets/Untitled 8.png|Untitled 8.png]]
+![Untitled 8.png](Pinned/assets/Untitled%208.png)
 
 And also I found another function above the validation function which was generating SSL connection.
 
-![[Pinned/assets/Untitled 9.png|Untitled 9.png]]
+![Untitled 9.png](Pinned/assets/Untitled%209.png)
 
 On further investing I found the `run()` function which runs while generating SSL connection in the `MainActivity` file:
 
-![[Pinned/assets/Untitled 10.png|Untitled 10.png]]
+![Untitled 10.png](Pinned/assets/Untitled%2010.png)
 
 The above function is a custom certificate pinning function which checks whether the certificate used is valid or not. To make burpsuite intercept the login request, we have to bypass the above check.
 
@@ -112,16 +112,16 @@ After installing frida on your local system, next you have to install frida serv
 4. Now we have change the permissions of the `frida-server` file using the command: `adb shell "chmod 755 /data/local/tmp/frida-server"`
 5. Now open `adb shell` and move to the directory where we pushed the `frida-server` and run the `frida-server` using the command: `./frida-server`.
 
-![[Pinned/assets/Untitled 11.png|Untitled 11.png]]
+![Untitled 11.png](Pinned/assets/Untitled%2011.png)
 
 1. Now open a new terminal and again initialise the python environment using the command: `source ./env/bin/activate`
 2. Now run the command: `frida-ps -U`, to check whether the frida server is running. This command should list all the packages.
 
-![[Pinned/assets/Untitled 12.png|Untitled 12.png]]
+![Untitled 12.png](Pinned/assets/Untitled%2012.png)
 
 Now we have successfully established the connection to the frida-server. Now its time to run the exploit. Before running the exploit, let’s take a look at it:
 
-![[Pinned/assets/Untitled 13.png|Untitled 13.png]]
+![Untitled 13.png](Pinned/assets/Untitled%2013.png)
 
 We can see that it is generating the SSL using a custom certificate, which is the burpsuite ca certificate in our case.
 
@@ -131,7 +131,7 @@ To push the certificate to the android device, use the following command:
 
 `adb push ./cacert.pem /data/local/tmp/cert-der.crt`
 
-![[Pinned/assets/Untitled 14.png|Untitled 14.png]]
+![Untitled 14.png](Pinned/assets/Untitled%2014.png)
 
 After successfully pushing the file, its time to execute the exploit. Make sure that you have turned burp intercept on and also make sure that you have connected to burp proxy in the android device.
 
@@ -139,13 +139,13 @@ Now run the following command to execute the payload:
 
 `frida --codeshare pcipolloni/universal-android-ssl-pinning-bypass-with-frida -U -f com.example.pinned`
 
-![[Pinned/assets/Untitled 15.png|Untitled 15.png]]
+![Untitled 15.png](Pinned/assets/Untitled%2015.png)
 
 The exploit has executed successfully and is waiting for the request.
 
 Now go to the Pinned application and try to login and check the captured request in burp:
 
-![[Pinned/assets/Untitled 16.png|Untitled 16.png]]
+![Untitled 16.png](Pinned/assets/Untitled%2016.png)
 
 We have successfully obtained the flag……
 

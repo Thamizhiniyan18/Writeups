@@ -35,9 +35,9 @@ First start the reconnaissance by running `rustscan` on the target IP address.
 
 Command: `rustscan -a 10.10.10.3 -- -A -Pn`
 
-![[Lame/assets/Untitled.png|Untitled.png]]
+![Untitled.png](Lame/assets/Untitled.png)
 
-![[Lame/assets/Untitled 1.png|Untitled 1.png]]
+![Untitled 1.png](Lame/assets/Untitled%201.png)
 
 From the results, we got the following ports and services running:
 
@@ -54,7 +54,7 @@ First, I started enumerating the FTP service running on Port `21`.
 
 From the scan results, we can see that the Anonymous login is allowed for FTP
 
-![[Lame/assets/Untitled 2.png|Untitled 2.png]]
+![Untitled 2.png](Lame/assets/Untitled%202.png)
 
 So I tried to login as `Anonymous`
 
@@ -64,9 +64,9 @@ username: `Anonymous`
 
 Password: `Anonymous`
 
-![[Lame/assets/Untitled 3.png|Untitled 3.png]]
+![Untitled 3.png](Lame/assets/Untitled%203.png)
 
-![[Lame/assets/Untitled 4.png|Untitled 4.png]]
+![Untitled 4.png](Lame/assets/Untitled%204.png)
 
 Found nothing in the FTP anonymous Login.
 
@@ -74,7 +74,7 @@ Next I started to enumerate SMB service running on port 139. I used `enum4linux`
 
 Command: `enum4linux -a 10.10.10.3`
 
-![[Lame/assets/Untitled 5.png|Untitled 5.png]]
+![Untitled 5.png](Lame/assets/Untitled%205.png)
 
 From the response of `enum4linux`, I didn’t found any interesting shares.
 
@@ -94,19 +94,19 @@ To use the above exploit, execute the commands in `msfconsole` as follows:
 
 `run`
 
-![[Lame/assets/Untitled 6.png|Untitled 6.png]]
+![Untitled 6.png](Lame/assets/Untitled%206.png)
 
 Now we have got access to the target machine as `root`. I searched for the user flag using the following command:
 
 command: `find / -name user.txt`
 
-![[Lame/assets/Untitled 7.png|Untitled 7.png]]
+![Untitled 7.png](Lame/assets/Untitled%207.png)
 
 And we have found the user flag.
 
 Now I searched for the root flag using the same method and found the root flag:
 
-![[Lame/assets/Untitled 8.png|Untitled 8.png]]
+![Untitled 8.png](Lame/assets/Untitled%208.png)
 
   
 

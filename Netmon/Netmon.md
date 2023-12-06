@@ -34,9 +34,9 @@ First start by scanning the target. In my case I use `rustscan`, use your favour
 
 Command: `rustscan -a 10.10.10.152 -- -A -T4 -v -Pn`
 
-![[Netmon/assets/Untitled.png|Untitled.png]]
+![Untitled.png](Netmon/assets/Untitled.png)
 
-![[Netmon/assets/Untitled 1.png|Untitled 1.png]]
+![Untitled 1.png](Netmon/assets/Untitled%201.png)
 
 From the scan results found the following ports and services:
 
@@ -58,11 +58,11 @@ From the scan results found the following ports and services:
 
 I first ran `enum4linux` , to enumerate the SMB shares but found nothing.
 
-![[Netmon/assets/Untitled 2.png|Untitled 2.png]]
+![Untitled 2.png](Netmon/assets/Untitled%202.png)
 
 Next I visited the website running on port 80.
 
-![[Netmon/assets/Untitled 3.png|Untitled 3.png]]
+![Untitled 3.png](Netmon/assets/Untitled%203.png)
 
 Found the above welcome page. The name of the application running on port 80 is PRTG Network Monitor. I googled the version `Indy httpd 18.1.37.13946` which we got during scanning and got the following: [https://www.rapid7.com/db/modules/exploit/windows/http/prtg_authenticated_rce/](https://www.rapid7.com/db/modules/exploit/windows/http/prtg_authenticated_rce/).
 
@@ -72,51 +72,51 @@ The application running on port 80 is vulnerable to RCE, but to execute the expl
 
 Since, Anonymous login is allowed for the FTP service. I logged in as Anonymous.
 
-![[Netmon/assets/Untitled 4.png|Untitled 4.png]]
+![Untitled 4.png](Netmon/assets/Untitled%204.png)
 
 Next I started surfing around the files available in the FTP server and found the user flag at `C:\Users\Public` directory. I used the `more` command to view the contents of the `user.txt` file.
 
-![[Netmon/assets/Untitled 5.png|Untitled 5.png]]
+![Untitled 5.png](Netmon/assets/Untitled%205.png)
 
   
 
 Next, I started further surfing around the FTP server and found that we do have access to all the program related files. So I googled out where the config files for the PRTG service is stored and got this: [https://kb.paessler.com/en/topic/463-how-and-where-does-prtg-store-its-data](https://kb.paessler.com/en/topic/463-how-and-where-does-prtg-store-its-data).
 
-![[Netmon/assets/Untitled 6.png|Untitled 6.png]]
+![Untitled 6.png](Netmon/assets/Untitled%206.png)
 
-![[Netmon/assets/Untitled 7.png|Untitled 7.png]]
+![Untitled 7.png](Netmon/assets/Untitled%207.png)
 
 So, I checked the `C:\ProgramData\Paessler\PRTG Network Monitor`directory and found the following:
 
-![[Netmon/assets/Untitled 8.png|Untitled 8.png]]
+![Untitled 8.png](Netmon/assets/Untitled%208.png)
 
 I first viewed the contents of the `PRTG Configuration.dat`.
 
 Found nothing. Next I checked the `PRTG configuration.old`. This time also found nothing. Next I checked the `PRTG configuration.old.bak` and found the following:
 
-![[Netmon/assets/Untitled 9.png|Untitled 9.png]]
+![Untitled 9.png](Netmon/assets/Untitled%209.png)
 
 Found the credentials `prtgadmin:PrTg@dmin2018`. Tried it on the PRTG Network Monitor portal.
 
-![[Netmon/assets/Untitled 10.png|Untitled 10.png]]
+![Untitled 10.png](Netmon/assets/Untitled%2010.png)
 
 But failed. Since we go this credential from the backup file, the password might be updated. This machine was released in 2019 and following the password pattern, we guess that the password might be `PrTg@dmin2019`. I tried it and it worked!
 
-![[Netmon/assets/Untitled 11.png|Untitled 11.png]]
+![Untitled 11.png](Netmon/assets/Untitled%2011.png)
 
 Now we have successfully logged in. Now we got valid credentials. Now as mentioned in the following site: [https://www.rapid7.com/db/modules/exploit/windows/http/prtg_authenticated_rce/](https://www.rapid7.com/db/modules/exploit/windows/http/prtg_authenticated_rce/) , we can use `metasploit` to exploit this vulnerability.
 
-![[Netmon/assets/Untitled 12.png|Untitled 12.png]]
+![Untitled 12.png](Netmon/assets/Untitled%2012.png)
 
 Now run the exploit.
 
-![[Netmon/assets/Untitled 13.png|Untitled 13.png]]
+![Untitled 13.png](Netmon/assets/Untitled%2013.png)
 
 And we have successfully got the meterpreter reverse shell back.
 
 On checking the `C:\Users\Administrator\Desktop` directory, found the root flag.
 
-![[Netmon/assets/Untitled 14.png|Untitled 14.png]]
+![Untitled 14.png](Netmon/assets/Untitled%2014.png)
 
 We have successfully found the root flag.
 

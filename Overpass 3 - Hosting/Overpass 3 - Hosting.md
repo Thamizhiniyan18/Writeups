@@ -26,7 +26,7 @@ First Start the machine and do a basic nmap scan.
 
 Command: `nmap -A -T4 -v <TargetIP>`
 
-![[Overpass 3 - Hosting/assets/Untitled.png|Untitled.png]]
+![Untitled.png](Overpass%203%20-%20Hosting/assets/Untitled.png)
 
 From the response we can see 3 open ports: 21, 22, 80.
 
@@ -36,31 +36,31 @@ From the response we can see 3 open ports: 21, 22, 80.
 
 Next we can take a look at the website that is running on port 80.
 
-![[Overpass 3 - Hosting/assets/Untitled 1.png|Untitled 1.png]]
+![Untitled 1.png](Overpass%203%20-%20Hosting/assets/Untitled%201.png)
 
 There was no additional links present in the website. Even I checked the source code nothing interesting found.
 
-![[Overpass 3 - Hosting/assets/Untitled 2.png|Untitled 2.png]]
+![Untitled 2.png](Overpass%203%20-%20Hosting/assets/Untitled%202.png)
 
 Even `robots.txt` not found.
 
-![[Overpass 3 - Hosting/assets/Untitled 3.png|Untitled 3.png]]
+![Untitled 3.png](Overpass%203%20-%20Hosting/assets/Untitled%203.png)
 
 Next I tried to Directory enumeration using `gobuster`.
 
 Command: `gobuster dir -u http://<TargetIP>/ -w` `**/usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt**`
 
-![[Overpass 3 - Hosting/assets/Untitled 4.png|Untitled 4.png]]
+![Untitled 4.png](Overpass%203%20-%20Hosting/assets/Untitled%204.png)
 
 From the results of `gobuster` , we can see that there is a folder named `/backups`.
 
 Now I visited `http://<TargetIP>/backups`.
 
-![[Overpass 3 - Hosting/assets/Untitled 5.png|Untitled 5.png]]
+![Untitled 5.png](Overpass%203%20-%20Hosting/assets/Untitled%205.png)
 
 In the `/backups` directory, we can see that there is a `backup.zip` file. I downloaded and extracted the zip file.
 
-![[Overpass 3 - Hosting/assets/Untitled 6.png|Untitled 6.png]]
+![Untitled 6.png](Overpass%203%20-%20Hosting/assets/Untitled%206.png)
 
 From the extracted zip file, I got two files, `CustomerDetails.xlsx.gpg` and `priv.key`.
 
@@ -68,17 +68,17 @@ Now to decrypt the `CustomerDetails.xlsx.gpg` file, first we have to import the 
 
 Command: `gpg --import priv.key`
 
-![[Overpass 3 - Hosting/assets/Untitled 7.png|Untitled 7.png]]
+![Untitled 7.png](Overpass%203%20-%20Hosting/assets/Untitled%207.png)
 
 Next, decrypt the file and store the output using the following command:
 
 Command: `gpg -d` `**CustomerDetails.xlsx.gpg**` `**>**` `CustomerDetails.xlsx`
 
-![[Overpass 3 - Hosting/assets/Untitled 8.png|Untitled 8.png]]
+![Untitled 8.png](Overpass%203%20-%20Hosting/assets/Untitled%208.png)
 
 Now if we open the `CustomerDetails.xlsx` file with a document viewer of your choice. In my I case I opened it with `libre office calc`.
 
-![[Overpass 3 - Hosting/assets/Untitled 9.png|Untitled 9.png]]
+![Untitled 9.png](Overpass%203%20-%20Hosting/assets/Untitled%209.png)
 
 We have found some interesting customer details, usernames, passwords and credit card details.
 
@@ -94,28 +94,28 @@ Username: `paradox`
 
 Password: `ShibesAreGreat123`
 
-![[Overpass 3 - Hosting/assets/Untitled 10.png|Untitled 10.png]]
+![Untitled 10.png](Overpass%203%20-%20Hosting/assets/Untitled%2010.png)
 
 I was able to login to FTP with the above credentials. Next to tried list the contents by using the `ls` command. From the output of the `ls` command, we can devise that this FTP server directory is the hosted apache server on port 80.
 
 So, I tried to upload a reverse shell into the FTP server. In this case I used the reverse shell from the following link: [https://github.com/pentestmonkey/php-reverse-shell](https://github.com/pentestmonkey/php-reverse-shell).
 
 > [!important]  
-> Note: Don’t forget to update your the IP address in the reverse shell, to your TryHackMe tunnel IP address ( You can find it in the navbar of the tryhackme website )![[Overpass 3 - Hosting/assets/Untitled 11.png|Untitled 11.png]]  
+> Note: Don’t forget to update your the IP address in the reverse shell, to your TryHackMe tunnel IP address ( You can find it in the navbar of the tryhackme website )![Untitled 11.png](Overpass%203%20-%20Hosting/assets/Untitled%2011.png)  
 
 To upload to a FTP server use the following command:
 
 Command: `put <file_name>`
 
-![[Overpass 3 - Hosting/assets/Untitled 12.png|Untitled 12.png]]
+![Untitled 12.png](Overpass%203%20-%20Hosting/assets/Untitled%2012.png)
 
 After successfully uploading, start a listener in your local machine using `netcat` . In my case, I have mentioned the port as 1234 in the reverse shell file. Check it for your file and create a listener accordingly.
 
-![[Overpass 3 - Hosting/assets/Untitled 13.png|Untitled 13.png]]
+![Untitled 13.png](Overpass%203%20-%20Hosting/assets/Untitled%2013.png)
 
 Now open your browser and open the following link: [http://<TargetIP>/revshell.php](http://10.10.110.240/revshell.php). The website will be continuously loading.
 
-![[Overpass 3 - Hosting/assets/Untitled 14.png|Untitled 14.png]]
+![Untitled 14.png](Overpass%203%20-%20Hosting/assets/Untitled%2014.png)
 
 Now check your netcat listener, you can see the reverse shell has executed successfully.
 
@@ -125,11 +125,11 @@ Now spawn a tty shell to make your shell more stable by using the following comm
 
 `python3 -c 'import pty; pty.spawn("/bin/sh")’`
 
-![[Overpass 3 - Hosting/assets/Untitled 15.png|Untitled 15.png]]
+![Untitled 15.png](Overpass%203%20-%20Hosting/assets/Untitled%2015.png)
 
 Now check the home directory to find the web flag.
 
-![[Overpass 3 - Hosting/assets/Untitled 16.png|Untitled 16.png]]
+![Untitled 16.png](Overpass%203%20-%20Hosting/assets/Untitled%2016.png)
 
 Now we have successfully found the First flag. Next we have to find the user flag.
 
@@ -137,4 +137,4 @@ Now we have successfully found the First flag. Next we have to find the user fla
 
 [https://exploit-notes.hdks.org/exploit/linux/privilege-escalation/apache-conf-privilege-escalation/](https://exploit-notes.hdks.org/exploit/linux/privilege-escalation/apache-conf-privilege-escalation/)
 
-![[Overpass 3 - Hosting/assets/Untitled 17.png|Untitled 17.png]]
+![Untitled 17.png](Overpass%203%20-%20Hosting/assets/Untitled%2017.png)

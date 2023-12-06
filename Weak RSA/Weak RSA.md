@@ -34,7 +34,7 @@ We need the private key to decrypt the `flag.enc` file, since the public key is 
 
 The public key in the `key.pub` is smaller, i.e., of less length. Its possible to retrieve private keys from short or smaller public keys.
 
-![[Weak RSA/assets/Untitled.png|Untitled.png]]
+![Untitled.png](Weak%20RSA/assets/Untitled.png)
 
 We can do this by using the tool [RsaCtfTool](https://github.com/RsaCtfTool/RsaCtfTool). To install and run this tool execute the commands given below:
 
@@ -70,11 +70,11 @@ python3 ./RsaCtfTool/RsaCtfTool.py --publickey ./key.pub --private
 // --private - Display private key if recovered.
 ```
 
-![[Weak RSA/assets/Untitled 1.png|Untitled 1.png]]
+![Untitled 1.png](Weak%20RSA/assets/Untitled%201.png)
 
 We have successfully recovered the private key. Now copy and store the private key in a `private.key` file.
 
-![[Weak RSA/assets/Untitled 2.png|Untitled 2.png]]
+![Untitled 2.png](Weak%20RSA/assets/Untitled%202.png)
 
 Now we can use this private key to decrypt the contents of the `flag.enc` file. We can do this by using the `openssl` utility.
 
@@ -91,7 +91,7 @@ openssl pkeyutl -in flag.enc -out flag.txt -decrypt -inkey ./private.key
 // -out - Decrypted output file name and location.
 ```
 
-![[Weak RSA/assets/Untitled 3.png|Untitled 3.png]]
+![Untitled 3.png](Weak%20RSA/assets/Untitled%203.png)
 
 We have successfully decrypted the file and got the flag!!!!!
 
